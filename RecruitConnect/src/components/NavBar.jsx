@@ -1,14 +1,18 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../Navbar.css";
 
 const Navbar = () => {
-  const [jobSeekerDropdown, setJobSeekerDropdown] = useState(false);
-  const [employerDropdown, setEmployerDropdown] = useState(false);
+  const [dropdown, setDropdown] = useState({
+    jobSeeker: false,
+    employer: false
+  });
 
-  const toggleDropdown = (dropdownSetter) => {
-    setJobSeekerDropdown(false);
-    setEmployerDropdown(false);
-    dropdownSetter((prev) => !prev);
+  const toggleDropdown = (type) => {
+    setDropdown((prev) => ({
+      jobSeeker: type === "jobSeeker" ? !prev.jobSeeker : false,
+      employer: type === "employer" ? !prev.employer : false
+    }));
   };
 
   const NavItem = ({ title, isOpen, toggle, children }) => (
@@ -20,10 +24,10 @@ const Navbar = () => {
     </div>
   );
 
-  const DropdownItem = ({ href, children }) => (
-    <a href={href} className="dropdown-item">
+  const DropdownItem = ({ to, children }) => (
+    <Link to={to} className="dropdown-item">
       {children}
-    </a>
+    </Link>
   );
 
   return (
@@ -35,19 +39,19 @@ const Navbar = () => {
         <div className="navbar-links">
           <NavItem
             title="Job-Seeker"
-            isOpen={jobSeekerDropdown}
-            toggle={() => toggleDropdown(setJobSeekerDropdown)}
+            isOpen={dropdown.jobSeeker}
+            toggle={() => toggleDropdown("jobSeeker")}
           >
-            <DropdownItem href="/login">Log In</DropdownItem>
-            <DropdownItem href="/signup">Sign Up</DropdownItem>
+            <DropdownItem to="/seeker-login">Log In</DropdownItem>
+            <DropdownItem to="/seeker-signup">Sign Up</DropdownItem>
           </NavItem>
           <NavItem
             title="Employer"
-            isOpen={employerDropdown}
-            toggle={() => toggleDropdown(setEmployerDropdown)}
+            isOpen={dropdown.employer}
+            toggle={() => toggleDropdown("employer")}
           >
-            <DropdownItem href="/login">Log In</DropdownItem>
-            <DropdownItem href="/signup">Sign Up</DropdownItem>
+            <DropdownItem to="/employer-login">Log In</DropdownItem>
+            <DropdownItem to="/employer-signup">Sign Up</DropdownItem>
           </NavItem>
         </div>
       </div>
@@ -56,5 +60,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-

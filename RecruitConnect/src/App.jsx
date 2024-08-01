@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Landing from './components/Landing';
 import Search from './components/Search';
@@ -15,19 +15,17 @@ const App = () => {
       <div>
         <NavBar />
         <Routes>
-          <Route>
-            <Route path="/" element={<Landing />}></Route>
-            <Route path="/search" element={<Search />}></Route>
-            <Route path="/jobs" element={<JobList />} />
-            <Route path="/jobs" element={<Landing />}></Route>
-            <Route path="/employer-login" element={<EmployerLogin />}></Route>
-            <Route path="/seeker-login" element={<SeekerLogin />}></Route>
-          </Route>
+          <Route path="/" element={<Landing />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/jobs" element={<JobList />} />
+          <Route path="/employer-login" element={<EmployerLogin />} />
+          <Route path="/employer-signup" element={<EmployerLogin />} />
+          <Route path="/seeker-login" element={<SeekerLogin />} />
+          <Route path="/seeker-signup" element={<SeekerLogin />} />
         </Routes>
         <Footer />
       </div>
     </>
-
   );
 };
 
