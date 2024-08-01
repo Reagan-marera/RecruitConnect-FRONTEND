@@ -11,4 +11,4 @@ return (
 }
 
 
-export default EmployerLogin;
+export default EmployerLogin
