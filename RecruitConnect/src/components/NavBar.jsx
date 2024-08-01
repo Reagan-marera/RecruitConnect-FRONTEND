@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import {Link} from 'react-router-dom'
+
 import "../Navbar.css";
 
 const Navbar = () => {
@@ -34,9 +35,10 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-logo">
-          <img src="/path-to-your-logo.png" alt="Logo" className="logo" />
+          <img src="/logo1.png" alt="Logo" className="logo" />
         </div>
         <div className="navbar-links">
+          <Link to="/">Home</Link>
           <NavItem
             title="Job-Seeker"
             isOpen={dropdown.jobSeeker}
@@ -54,6 +56,7 @@ const Navbar = () => {
             <DropdownItem to="/employer-signup">Sign Up</DropdownItem>
           </NavItem>
         </div>
+  
       </div>
     </nav>
   );

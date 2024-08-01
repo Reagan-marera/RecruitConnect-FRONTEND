@@ -1,0 +1,83 @@
+/* Style for the job-list container */
+.job-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Base style for job cards */
+.job-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  width: calc(33.333% - 1rem); /* Three cards per row with spacing */
+  height: calc(38% - 1rem); /* Maintain square shape */
+  box-sizing: border-box; /* Include padding and border in the width and height */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* Center text inside card */
+  overflow: hidden; /* Hide overflow to maintain the square shape */
+}
+
+/* Hover effect for job cards */
+.job-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for job-details container */
+.job-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  height: calc(100vh - 4rem); /* Adjust height based on padding and other factors */
+  overflow-y: auto;
+}
+
+/* Detailed job view styling */
+.job-details .job-card {
+  border: none; /* Remove card border */
+  border-radius: 0; /* Remove card border-radius */
+  padding: 0; /* Remove padding */
+  width: 100%; /* Full width for detailed view */
+  max-width: none; /* Remove maximum width constraint */
+  box-shadow: none; /* Remove card shadow */
+  background-color: transparent; /* Remove background color */
+}
+
+/* Detailed job data styling */
+.job-details .job-data {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  max-width: 800px; /* Adjust as needed */
+  width: 100%;
+  background-color: #fff; /* Background color for the detailed view */
+}
+
+.job-details .job-data p {
+  margin: 0.5rem 0; /* Adjust margin between paragraphs */
+}
+
+.job-details button {
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff; /* Button background color */
+  color: #fff; /* Button text color */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.job-details button:hover {
+  background-color: #0056b3; /* Darker button background on hover */
+  transform: scale(1.1); /* Slightly larger button on hover */
+}
