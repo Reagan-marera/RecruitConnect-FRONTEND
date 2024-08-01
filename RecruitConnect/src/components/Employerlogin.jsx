@@ -42,10 +42,10 @@ const Employerlogin = () => {
   };
 
   return (
-    <div className="form-container">
-      <h2 className="h2">Add Employer</h2>
-      {error && <p className="error">{error}</p>}
-      <form onSubmit={handleSubmit}>
+    <div className="employer-login-container">
+      <h2 className="employer-login-header">Add Employer</h2>
+      {error && <p className="employer-error-message">{error}</p>}
+      <form onSubmit={handleSubmit} className="employer-login-form">
         <input
           type="text"
           name="company_name"
@@ -53,6 +53,7 @@ const Employerlogin = () => {
           value={formData.company_name}
           onChange={handleChange}
           required
+          className="employer-login-input"
         />
         <input
           type="email"
@@ -61,6 +62,7 @@ const Employerlogin = () => {
           value={formData.contact_email}
           onChange={handleChange}
           required
+          className="employer-login-input"
         />
         <input
           type="text"
@@ -68,6 +70,7 @@ const Employerlogin = () => {
           placeholder="Address"
           value={formData.address}
           onChange={handleChange}
+          className="employer-login-input"
         />
         <input
           type="text"
@@ -75,8 +78,9 @@ const Employerlogin = () => {
           placeholder="Phone Number"
           value={formData.phone_number}
           onChange={handleChange}
+          className="employer-login-input"
         />
-        <button type="submit" disabled={loading}>
+        <button type="submit" disabled={loading} className="employer-login-button">
           {loading ? "Submitting..." : "Add Employer"}
         </button>
       </form>
@@ -84,7 +88,4 @@ const Employerlogin = () => {
   );
 };
 
-
 export default Employerlogin;
-
-
