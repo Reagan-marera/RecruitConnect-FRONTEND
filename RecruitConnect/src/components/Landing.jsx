@@ -1,5 +1,6 @@
 import React from "react";
 import { useSpring, animated } from "react-spring";
+import { useNavigate } from "react-router-dom";
 import { Search, Briefcase, Users, TrendingUp } from "lucide-react";
 import "../Landing.css";
 
@@ -13,17 +14,21 @@ const AnimatedSection = ({ children }) => {
 };
 
 const Landing = () => {
+  const navigate = useNavigate();
+
+  const handleFindJobsClick = () => {
+    navigate('/joblist');
+  };
+
   return (
     <div className="landing-page">
-   
-
       <AnimatedSection>
         <section className="hero">
           <div className="container">
             <h1>Find Your Dream Job with RecruitConnect</h1>
             <p>Connecting talented professionals with amazing opportunities</p>
             <div className="cta-buttons">
-              <button className="btn btn-primary">Find Jobs</button>
+              <button className="btn btn-primary" onClick={handleFindJobsClick}>Find Jobs</button>
               <button className="btn btn-secondary">Post a Job</button>
             </div>
           </div>
@@ -58,8 +63,6 @@ const Landing = () => {
           </div>
         </section>
       </AnimatedSection>
-
-
     </div>
   );
 };

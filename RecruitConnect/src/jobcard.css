@@ -1,0 +1,36 @@
+/* Base style for job cards */
+.job-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  width: calc(25% - 0.75rem); /* Adjust width to fit four cards per row */
+  height: 150px; /* Fixed height to make cards square */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  background-color: #fff;
+  cursor: pointer;
+  box-sizing: border-box; /* Include padding and border in the width */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Hover effect for job cards */
+.job-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #f9f9f9;
+}
+
+/* Style for job card titles */
+.job-card h2 {
+  margin: 0;
+  font-size: 1.2em; /* Adjust font size as needed */
+  color: #007bff; /* Light blue color for job titles */
+}
+
+/* Style for job card content */
+.job-card p {
+  margin: 5px 0;
+  text-align: center; /* Center text inside card */
+}
