@@ -1,0 +1,25 @@
+.job-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .job-card:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .job-card.detailed {
+    cursor: default;
+  }
+  
+  .job-card h2 {
+    margin: 0;
+    font-size: 1.5em;
+  }
+  
+  .job-card p {
+    margin: 5px 0;
+  }
+  
