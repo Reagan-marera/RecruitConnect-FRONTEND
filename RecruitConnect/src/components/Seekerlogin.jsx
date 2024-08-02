@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import "./Seekerlogin.css"; 
+import { useNavigate, useLocation } from "react-router-dom";
+import "./Seekerlogin.css";
 
 const Seekerlogin = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -14,6 +14,16 @@ const Seekerlogin = () => {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Check the current path and set the form mode accordingly
+    if (location.pathname === "/seeker-signup") {
+      setIsLogin(false);
+    } else {
+      setIsLogin(true);
+    }
+  }, [location.pathname]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -100,7 +110,7 @@ const Seekerlogin = () => {
           </button>
           <div className="seeker-switch-form">
             {isLogin ? "Don't have an account? " : "Already have an account? "}
-            <button type="button" onClick={() => setIsLogin(!isLogin)} className="seeker-btn-link">
+            <button type="button" onClick={() => navigate(isLogin ? "/seeker-signup" : "/seeker-login")} className="seeker-btn-link">
               {isLogin ? "Register" : "Login"}
             </button>
           </div>
