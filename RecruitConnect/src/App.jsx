@@ -2,8 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Landing from './components/Landing';
-import Search from './components/Search';
-import JobList from './components/Joblist';
+import Joblist from './components/Joblist';
 import Footer from './components/Footer';
 import EmployerLogin from './components/Employerlogin';
 import Logout from './Logout';
@@ -33,10 +32,20 @@ const App = () => {
     <AuthProvider>
       <div>
         <NavBar />
-        <AppRoutes />
+        <Routes>
+          <Route>
+              <Route path="/" element={<Landing />}></Route>
+              <Route path="/joblist" element={<Joblist />} />
+              <Route path="/employer-login" element={<EmployerLogin />}></Route>
+              <Route path="/employer-signup" element={<EmployerLogin />}></Route>
+              <Route path="/seeker-signup" element={<SeekerLogin />} />
+              <Route path="/seeker-login" element={<SeekerLogin />}></Route>   
+          </Route>
+        </Routes>
         <Footer />
       </div>
-    </AuthProvider>
+      </AuthProvider>
+    </>
   );
 };
 
