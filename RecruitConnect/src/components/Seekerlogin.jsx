@@ -8,7 +8,9 @@ const Seekerlogin = () => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
-    password: ""
+    password: "",
+    confirmPassword: "", // New field for password confirmation
+    role: "user"
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -33,11 +35,22 @@ const Seekerlogin = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
+
+    if (!isLogin && formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match. Please try again.");
+      setFormData({ ...formData, password: "", confirmPassword: "" }); // Clear password fields
+      setLoading(false);
+      return;
+    }
+
     try {
       const url = isLogin
         ? "http://127.0.0.1:5000/login"
         : "http://127.0.0.1:5000/register";
-      const response = await axios.post(url, formData);
+
+      // Omit confirmPassword field when submitting
+      const { confirmPassword, ...submitData } = formData;
+      const response = await axios.post(url, submitData);
 
       if (isLogin) {
         // Save the JWT token in local storage or context
@@ -48,12 +61,12 @@ const Seekerlogin = () => {
         // Registration success
         setShowModal(true);
         setIsLogin(true); // Switch to login form
-        setFormData({ username: "", email: "", password: "" }); // Clear form fields
+        setFormData({ username: "", email: "", password: "", confirmPassword: "", role: "user" }); // Clear form fields and reset role
       }
     } catch (error) {
       if (isLogin) {
         // Handle login specific error
-        setError("User not found. Please register.");
+        setError("Invalid email or password. Please try again.");
       } else {
         // Handle registration error
         setError(error.response?.data?.error || "Failed to register. Please try again.");
@@ -105,6 +118,19 @@ const Seekerlogin = () => {
               required
             />
           </div>
+          {!isLogin && (
+            <div className="seeker-form-field">
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="seeker-login-input"
+                required
+              />
+            </div>
+          )}
           <button type="submit" disabled={loading} className="seeker-login-button seeker-btn-primary">
             {loading ? "Submitting..." : isLogin ? "Login" : "Register"}
           </button>
