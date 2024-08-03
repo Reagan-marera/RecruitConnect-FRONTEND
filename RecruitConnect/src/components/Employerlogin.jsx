@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
-import "../Loginform.css";
+import { useNavigate } from "react-router-dom";
 
-const Employerlogin = () => {
+
+const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -12,17 +12,13 @@ const Employerlogin = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token && location.pathname !== "/employer-login") {
-      navigate("/"); // Redirect to home if token found and not on login page
-    }
-  }, [navigate, location.pathname]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -32,21 +28,33 @@ const Employerlogin = () => {
 
     try {
       const response = await axios.post("http://127.0.0.1:5000/login", formData);
-      localStorage.setItem("token", response.data.access_token);
-      alert("Employer logged in successfully!");
-      navigate("/"); // Redirect to home page
+      const { access_token } = response.data;
+
+      // Save the token in localStorage or state management
+      localStorage.setItem("token", access_token);
+
+      // Decode token to get user role (assuming a JWT library is used)
+      const decodedToken = JSON.parse(atob(access_token.split('.')[1]));
+      const role = decodedToken.role;
+
+      // Redirect based on user role
+      if (role === "user") {
+        navigate("/seeker-dashboard");
+      } else if (role === "employer") {
+        navigate("/employer-dashboard");
+      }
     } catch (error) {
-      setError(error.response?.data?.error || "Failed to login. Please try again.");
+      setError(error.response?.data?.error || "Failed to log in. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="employer-login-container">
-      <h2 className="employer-login-header">Employer Login</h2>
-      {error && <p className="employer-error-message">{error}</p>}
-      <form onSubmit={handleSubmit} className="employer-login-form">
+    <div className="login-container">
+      <h2 className="login-header">Login</h2>
+      {error && <p className="login-error-message">{error}</p>}
+      <form onSubmit={handleSubmit} className="login-form">
         <input
           type="email"
           name="email"
@@ -54,7 +62,7 @@ const Employerlogin = () => {
           value={formData.email}
           onChange={handleChange}
           required
-          className="employer-login-input"
+          className="login-input"
         />
         <input
           type="password"
@@ -63,14 +71,14 @@ const Employerlogin = () => {
           value={formData.password}
           onChange={handleChange}
           required
-          className="employer-login-input"
+          className="login-input"
         />
-        <button type="submit" disabled={loading} className="employer-login-button">
-          {loading ? "Submitting..." : "Login"}
+        <button type="submit" disabled={loading} className="login-button">
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
     </div>
   );
 };
 
-export default Employerlogin;
+export default Login;
