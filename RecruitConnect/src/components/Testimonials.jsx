@@ -82,7 +82,7 @@ const Testimonials = () => {
       setFormSubmitted(true);
       setShowForm(false);
       setError("");
-      setMessage("Feedback submitted successfully!"); // Add success message
+      setMessage("Feedback submitted successfully!");
     } catch (error) {
       console.error("Error posting feedback:", error.message);
       setError(error.message);
