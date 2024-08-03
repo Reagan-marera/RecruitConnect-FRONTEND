@@ -6,7 +6,6 @@ import Joblist from './components/Joblist';
 import Footer from './components/Footer';
 import EmployerLogin from './components/Employerlogin';
 import SeekerLogin from './components/Seekerlogin';
-
 import './App.css';
 
 const App = () => {
