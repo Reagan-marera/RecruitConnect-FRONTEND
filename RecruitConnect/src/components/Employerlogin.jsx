@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -30,7 +29,7 @@ const Login = () => {
       const response = await axios.post("http://127.0.0.1:5000/login", formData);
       const { access_token } = response.data;
 
-      // Save the token in localStorage or state management
+      // Save the token in localStorage
       localStorage.setItem("token", access_token);
 
       // Decode token to get user role (assuming a JWT library is used)
@@ -42,8 +41,12 @@ const Login = () => {
         navigate("/seeker-dashboard");
       } else if (role === "employer") {
         navigate("/employer-dashboard");
+      } else {
+        // Handle unexpected roles
+        setError("Unexpected user role.");
       }
     } catch (error) {
+      // Handle errors from the server
       setError(error.response?.data?.error || "Failed to log in. Please try again.");
     } finally {
       setLoading(false);

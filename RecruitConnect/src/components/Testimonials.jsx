@@ -5,27 +5,39 @@ import "../Testimonials.css";
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [newReview, setNewReview] = useState({
-    name: "",
-    title: "",
-    quote: "",
-    rating: 0
-  });
+  const [rating, setRating] = useState(0);
+  const [content, setContent] = useState("");
   const [showForm, setShowForm] = useState(false);
-  const [formSubmitted, setFormSubmitted] = useState(false); // State to track form submission
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState(""); // For feedback submission messages
+
+  const getAuthToken = () => localStorage.getItem("token");
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/feedback")
-      .then((response) => {
+    const fetchTestimonials = async () => {
+      try {
+        const token = getAuthToken();
+        const response = await fetch("http://127.0.0.1:5000/feedback", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
-        return response.json();
-      })
-      .then((data) => setTestimonials(data))
-      .catch((error) => {
-        console.error("Error fetching reviews:", error);
-      });
+
+        const data = await response.json();
+        console.log("Fetched testimonials:", data); // Debugging data
+        setTestimonials(data);
+      } catch (error) {
+        console.error("Error fetching testimonials:", error);
+        setError("Failed to fetch testimonials.");
+      }
+    };
+
+    fetchTestimonials();
   }, []);
 
   const nextTestimonial = () => {
@@ -36,40 +48,53 @@ const Testimonials = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewReview({ ...newReview, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch("http://127.0.0.1:5000/feedback", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newReview),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setTestimonials([...testimonials, data]);
-        setNewReview({ name: "", title: "", quote: "", rating: 0 });
-        setFormSubmitted(true); // Set form submission state to true
-        setShowForm(false); // Hide the form after submission
-      })
-      .catch((error) => console.error("Error posting review:", error));
+
+    if (rating < 1 || rating > 5 || !content) {
+      setError("Please provide valid inputs.");
+      return;
+    }
+
+    try {
+      const token = getAuthToken();
+      const response = await fetch("http://127.0.0.1:5000/feedback", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          rating: rating,
+          content: content,
+        }),
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || "Network response was not ok");
+      }
+
+      const data = await response.json();
+      setTestimonials((prev) => [...prev, data]);
+      setRating(0);
+      setContent("");
+      setFormSubmitted(true);
+      setShowForm(false);
+      setError("");
+      setMessage("Feedback submitted successfully!"); // Add success message
+    } catch (error) {
+      console.error("Error posting feedback:", error.message);
+      setError(error.message);
+    }
   };
 
   const handleToggleForm = () => {
     if (formSubmitted) {
-      // If the form was submitted, reset the form and show it again
       setFormSubmitted(false);
-      setNewReview({ name: "", title: "", quote: "", rating: 0 });
+      setRating(0);
+      setContent("");
+      setMessage("");
     }
     setShowForm((prev) => !prev);
   };
@@ -78,6 +103,8 @@ const Testimonials = () => {
     <section className="testimonial-section">
       <div className="testimonial-container">
         <h2 className="testimonial-heading">What Our Users Say</h2>
+        {error && <p className="testimonial-error-message">{error}</p>}
+        {message && <p className="testimonial-success-message">{message}</p>}
         {testimonials.length > 0 ? (
           <div className="testimonial-wrapper">
             <button
@@ -92,23 +119,28 @@ const Testimonials = () => {
                 className="testimonial-slider"
                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}
               >
-                {testimonials.map((testimonial, index) => (
-                  <div key={index} className="card">
-                    <div className="card-content">
-                      <p className="card-para">"{testimonial.content}"</p>
-                      <h4 className="card-title">{testimonial.reviewer_name}</h4>
-                      <p className="card-para">{testimonial.title}</p>
-                      <div className="card-rating">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <span key={i}>&#9733;</span>
-                        ))}
-                        {[...Array(5 - testimonial.rating)].map((_, i) => (
-                          <span key={i}>&#9734;</span>
-                        ))}
+                {testimonials.map((testimonial, index) => {
+                  const validRating = Number.isInteger(testimonial.rating) && testimonial.rating >= 1 && testimonial.rating <= 5
+                    ? testimonial.rating
+                    : 0; 
+
+                  return (
+                    <div key={index} className="card">
+                      <div className="card-content">
+                        <p className="card-para">"{testimonial.content}"</p>
+                        <h4 className="card-title">{testimonial.reviewer_id}</h4>
+                        <div className="card-rating">
+                          {[...Array(validRating)].map((_, i) => (
+                            <span key={i}>&#9733;</span>
+                          ))}
+                          {[...Array(5 - validRating)].map((_, i) => (
+                            <span key={i}>&#9734;</span>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
             <button
@@ -140,55 +172,29 @@ const Testimonials = () => {
           {showForm ? "Cancel" : formSubmitted ? "Share Another Review" : "Share My Own Feedback"}
         </button>
         {showForm && (
-          <form onSubmit={handleSubmit} className="testimonial-form">
-            <h3>Share Your Feedback</h3>
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              value={newReview.name}
-              onChange={handleInputChange}
-              required
-              aria-label="Reviewer name"
-            />
-            <input
-              type="text"
-              name="title"
-              placeholder="Title"
-              value={newReview.title}
-              onChange={handleInputChange}
-              required
-              aria-label="Review title"
-            />
-            <textarea
-              name="quote"
-              placeholder="Quote"
-              value={newReview.quote}
-              onChange={handleInputChange}
-              required
-              aria-label="Review quote"
-            />
-            <input
-              type="number"
-              name="rating"
-              placeholder="Rating (1-5)"
-              value={newReview.rating}
-              onChange={handleInputChange}
-              min="1"
-              max="5"
-              required
-              aria-label="Rating (1-5)"
-            />
-            <button type="submit">Submit Review</button>
-            <button
-              type="button"
-              onClick={() => setShowForm(false)}
-              className="cancel-button"
-              aria-label="Cancel"
-            >
-              Cancel
-            </button>
-          </form>
+          <div>
+            <h2>Submit Feedback</h2>
+            {error && <p className="form-error">{error}</p>}
+            {message && <p className="form-success">{message}</p>}
+            <form onSubmit={handleSubmit} className="testimonial-form">
+              <input
+                type="number"
+                placeholder="Rating (1-5)"
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+                min="1"
+                max="5"
+                required
+              />
+              <textarea
+                placeholder="Feedback"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                required
+              />
+              <button type="submit">Submit Feedback</button>
+            </form>
+          </div>
         )}
       </div>
     </section>
