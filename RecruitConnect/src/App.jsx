@@ -7,8 +7,6 @@ import Footer from './components/Footer';
 import EmployerLogin from './components/Employerlogin';
 import SeekerLogin from './components/Seekerlogin';
 import Register from './components/Register';
-
-
 import './App.css';
 
 const App = () => {
