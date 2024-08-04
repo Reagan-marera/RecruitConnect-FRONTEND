@@ -34,7 +34,7 @@ const Seekerlogin = () => {
       const response = await axios.post("http://127.0.0.1:5000/login", formData);
       localStorage.setItem("token", response.data.access_token);
       alert("Seeker logged in successfully!");
-      navigate("/"); // Redirect to home page
+      navigate("/jobseeker"); // Redirect to home page
     } catch (error) {
       setError(error.response?.data?.error || "Failed to login. Please try again.");
     } finally {

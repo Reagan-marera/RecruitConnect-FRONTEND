@@ -8,6 +8,8 @@ import EmployerLogin from './components/Employerlogin';
 import SeekerLogin from './components/Seekerlogin';
 import Register from './components/Register';
 import './App.css';
+import JobSeeker from './seekercomponents/JobSeeker';
+import Application from './seekercomponents/Application';
 
 const App = () => {
   return (
@@ -23,7 +25,8 @@ const App = () => {
               <Route path="/seeker-signup" element={<SeekerLogin />} />
               <Route path="/seeker-login" element={<SeekerLogin />}></Route>
               <Route path="/register" element={<Register />} />
-   
+              <Route path="/jobseeker" element={<JobSeeker />} />
+              <Route path="application" element={<Application />} />
           </Route>
         </Routes>
         <Footer />
