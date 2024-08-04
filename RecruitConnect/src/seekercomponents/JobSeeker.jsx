@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
 import Application from './Application';
 import './seeker.css'; 
+
 function JobSeeker() {
   return (
     <div className="jobseeker-container">
