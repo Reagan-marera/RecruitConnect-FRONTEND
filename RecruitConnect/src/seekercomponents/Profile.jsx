@@ -9,7 +9,9 @@ const Profile = () => {
     phone: '',
     location: '',
     bio: '',
+    resume: '',
     profilePicture: ''
+
   });
   const [message, setMessage] = useState('');
   const [editMode, setEditMode] = useState(false);
@@ -17,7 +19,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:5000/api/user', {
+        const response = await axios.get('http://127.0.0.1:5000/user', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
           }
@@ -102,6 +104,7 @@ const Profile = () => {
             Profile Picture:
             <input type="file" name="profilePicture" onChange={handleFileChange} />
           </label>
+          
           <button type="submit">Save</button>
         </form>
       ) : (

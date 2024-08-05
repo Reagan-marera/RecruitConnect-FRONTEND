@@ -1,59 +1,65 @@
 .jobseeker-container {
-    padding-top: 40px; 
-    text-align: center; 
+  display: flex;
+  padding: 40px 20px;
+}
+
+.jobseeker-navbar {
+  background-color: #0323696b;
+  padding: 24px;
+  border-radius: 9px; 
+  width: 200px; /* Fixed width for the navbar */
+  margin-right: 20px;
+  flex-shrink: 0; /* Prevent shrinking */
+  position: sticky; /* Sticky positioning */
+  top: 40px; /* Adjust as needed */
+}
+
+.jobseeker-content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 9px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.jobseeker-nav-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.jobseeker-nav-item {
+  margin-bottom: 20px; /* Add space between items */
+}
+
+.jobseeker-nav-button {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 24px;
+  background-color: #575757;
+  border-radius: 20px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.jobseeker-nav-button:hover {
+  background-color: grey;
+  transform: scale(1.05); /* Add scale effect on hover */
+}
+
+@media (max-width: 768px) {
+  .jobseeker-container {
+    flex-direction: column;
   }
   
   .jobseeker-navbar {
-    background-color: #0323696b;
-    display: inline-block;
-    padding: 24px 20%; /* Use percentage for responsive horizontal padding */
-    border-radius: 9px; 
-    width: auto; /* Adjust the width automatically based on content */
-    max-width: 100%; /* Ensure it doesn't exceed the viewport width */
+    width: 100%;
+    margin-bottom: 20px;
   }
-  
-  /* Adjustments for smaller screens */
-  @media (max-width: 768px) {
-    .jobseeker-navbar {
-      padding: 24px 10%; /* Reduce horizontal padding on smaller screens */
-    }
-  
-    .jobseeker-nav-button {
-      padding: 8px 16px; /* Adjust button padding */
-    }
-  }
-  
-  /* Adjustments for very small screens */
-  @media (max-width: 480px) {
-    .jobseeker-navbar {
-      padding: 16px 5%; /* Further reduce horizontal padding */
-    }
-  
-    .jobseeker-nav-button {
-      padding: 6px 12px; /* Further adjust button padding */
-    }
-  }
-  
-  .jobseeker-nav-list {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .jobseeker-nav-item {
-    display: inline;
-  }
-  
+}
+
+@media (max-width: 480px) {
   .jobseeker-nav-button {
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-    padding: 8px 24px; 
-    background-color: #575757;
-    border-radius: 20px;
-    transition: background-color 0.3s;
+    padding: 6px 12px;
   }
-  
-  .jobseeker-nav-button:hover {
-    background-color: grey;
-  }
-  
+}
