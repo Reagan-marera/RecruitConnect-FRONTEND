@@ -10,11 +10,12 @@ function JobSeeker() {
       <nav className="jobseeker-navbar">
         <ul className="jobseeker-nav-list">
           <li className="jobseeker-nav-item">
-            <Link to="application" className="jobseeker-nav-button">Application</Link>
+            <Link to="profile" className="jobseeker-nav-button">Manage profile</Link>
           </li>
-          <li className="jobseeker-nav-item">
-            <Link to="profile" className="jobseeker-nav-button">Profile</Link>
+            <li className="jobseeker-nav-item">
+            <Link to="application" className="jobseeker-nav-button">Job application</Link>
           </li>
+
         </ul>
       </nav>
       <div className="jobseeker-content">
