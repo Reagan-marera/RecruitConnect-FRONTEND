@@ -17,7 +17,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:5000/api/user/profile', {
+        const response = await axios.get('http://127.0.0.1:5000/api/user', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
           }
@@ -59,7 +59,7 @@ const Profile = () => {
     }
 
     try {
-      const response = await axios.put('http://127.0.0.1:5000/api/user/profile', formData, {
+      const response = await axios.put('http://127.0.0.1:5000/api/user', formData, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           'Content-Type': 'multipart/form-data'
