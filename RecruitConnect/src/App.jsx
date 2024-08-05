@@ -8,6 +8,10 @@ import EmployerLogin from './components/Employerlogin';
 import SeekerLogin from './components/Seekerlogin';
 import Register from './components/Register';
 import JobSeeker from './seekercomponents/JobSeeker';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import TermsOfService from './pages/terms';
+import PrivacyPolicy from './pages/Policy';
 import './App.css';
 
 const App = () => {
@@ -23,6 +27,10 @@ const App = () => {
         <Route path="/seeker-login" element={<SeekerLogin />} />
         <Route path="/register" element={<Register />} />
         <Route path="/jobseeker/*" element={<JobSeeker />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/terms" element={<TermsOfService />} />
+        <Route path="/policy" element={<PrivacyPolicy />} />
       </Routes>
       <Footer />
     </div>
