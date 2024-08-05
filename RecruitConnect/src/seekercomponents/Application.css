@@ -1,0 +1,61 @@
+/* Ensures the card adjusts to the size of the page */
+.card {
+    max-width: 100%;
+    margin: 50px auto; /* Center the card and add spacing from the top */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f8f9fa; /* Light background color for the card */
+  }
+  
+  /* Styles for the header within the card */
+  .card-header {
+    background-color: #c7c7c7; /* Grey background */
+    color: black;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px; /* Space below the header */
+  }
+  
+  /* Styles for the body of the card */
+  .card-body {
+    background-color: white; /* White background for the content */
+    color: black;
+    padding: 20px;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 500px; /* Optional: Limit max width of the card */
+    text-align: center;
+    box-sizing: border-box;
+  }
+  
+  /* Styles for the button */
+  .find-job-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .find-job-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Ensures the spacing from the button to the end of the card is 100px */
+  .card-body::after {
+    content: '';
+    display: block;
+    height: 100px; /* Space at the bottom of the card */
+  }
+  
