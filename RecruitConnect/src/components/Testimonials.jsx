@@ -127,7 +127,7 @@ const Testimonials = () => {
                   return (
                     <div key={index} className="card">
                       <div className="card-content">
-                        <p className="card-para">"{testimonial.content}"</p>
+                        <p className="card-para">{testimonial.content}</p>
                         <h4 className="card-title">{testimonial.reviewer_id}</h4>
                         <div className="card-rating">
                           {[...Array(validRating)].map((_, i) => (
