@@ -4,7 +4,7 @@ import NavBar from './components/NavBar';
 import Landing from './components/Landing';
 import Joblist from './components/Joblist';
 import Footer from './components/Footer';
-import Login from './components/Employerlogin';
+import EmployerLogin from './components/Employerlogin';
 import SeekerLogin from './components/Seekerlogin';
 import Register from './components/Register';
 import JobSeeker from './seekercomponents/JobSeeker';
@@ -17,7 +17,6 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/joblist" element={<Joblist />} />
-         <Route path="/login" element={<Login />}></Route>
         <Route path="/employer-login" element={<EmployerLogin />} />
         <Route path="/employer-signup" element={<EmployerLogin />} />
         <Route path="/seeker-signup" element={<SeekerLogin />} />
