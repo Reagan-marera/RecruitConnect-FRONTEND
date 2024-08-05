@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../Register.css";
-
+import "./Register.css";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -10,15 +9,7 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
-
-    role: "user", 
-    company_name: "",
-    contact_email: "",
-    company_culture: "",
-    job_openings: "",
-    address: "",
-    phone_number: ""
-
+    role: "user" 
   });
 
   const [error, setError] = useState("");
@@ -50,10 +41,9 @@ const Register = () => {
     }
 
     try {
-
       await axios.post("http://127.0.0.1:5000/register", formData);
       alert("Registration successful! Redirecting to login page.");
-  
+      // Redirect based on user role
       if (formData.role === "user") {
         navigate("/seeker-login");
       } else if (formData.role === "employer") {
@@ -117,59 +107,6 @@ const Register = () => {
           <option value="user">Job Seeker</option>
           <option value="employer">Employer</option>
         </select>
-
-        {formData.role === 'employer' && (
-          <>
-            <input
-              type="text"
-              name="company_name"
-              placeholder="Company Name"
-              value={formData.company_name}
-              onChange={handleChange}
-              className="register-input"
-            />
-            <input
-              type="email"
-              name="contact_email"
-              placeholder="Contact Email"
-              value={formData.contact_email}
-              onChange={handleChange}
-              className="register-input"
-            />
-            <input
-              type="text"
-              name="company_culture"
-              placeholder="Company Culture"
-              value={formData.company_culture}
-              onChange={handleChange}
-              className="register-input"
-            />
-            <input
-              type="text"
-              name="job_openings"
-              placeholder="Job Openings"
-              value={formData.job_openings}
-              onChange={handleChange}
-              className="register-input"
-            />
-            <input
-              type="text"
-              name="address"
-              placeholder="Address"
-              value={formData.address}
-              onChange={handleChange}
-              className="register-input"
-            />
-            <input
-              type="text"
-              name="phone_number"
-              placeholder="Phone Number"
-              value={formData.phone_number}
-              onChange={handleChange}
-              className="register-input"
-            />
-          </>
-        )}
         <button type="submit" disabled={loading} className="register-button">
           {loading ? "Submitting..." : "Register"}
         </button>
@@ -179,3 +116,4 @@ const Register = () => {
 };
 
 export default Register;
+

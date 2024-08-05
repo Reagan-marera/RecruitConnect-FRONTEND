@@ -1,0 +1,59 @@
+.jobseeker-container {
+    padding-top: 40px; 
+    text-align: center; 
+  }
+  
+  .jobseeker-navbar {
+    background-color: #0323696b;
+    display: inline-block;
+    padding: 24px 20%; /* Use percentage for responsive horizontal padding */
+    border-radius: 9px; 
+    width: auto; /* Adjust the width automatically based on content */
+    max-width: 100%; /* Ensure it doesn't exceed the viewport width */
+  }
+  
+  /* Adjustments for smaller screens */
+  @media (max-width: 768px) {
+    .jobseeker-navbar {
+      padding: 24px 10%; /* Reduce horizontal padding on smaller screens */
+    }
+  
+    .jobseeker-nav-button {
+      padding: 8px 16px; /* Adjust button padding */
+    }
+  }
+  
+  /* Adjustments for very small screens */
+  @media (max-width: 480px) {
+    .jobseeker-navbar {
+      padding: 16px 5%; /* Further reduce horizontal padding */
+    }
+  
+    .jobseeker-nav-button {
+      padding: 6px 12px; /* Further adjust button padding */
+    }
+  }
+  
+  .jobseeker-nav-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .jobseeker-nav-item {
+    display: inline;
+  }
+  
+  .jobseeker-nav-button {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    padding: 8px 24px; 
+    background-color: #575757;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+  }
+  
+  .jobseeker-nav-button:hover {
+    background-color: grey;
+  }
+  

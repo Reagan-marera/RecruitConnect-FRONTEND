@@ -7,27 +7,26 @@ import Footer from './components/Footer';
 import Login from './components/Employerlogin';
 import SeekerLogin from './components/Seekerlogin';
 import Register from './components/Register';
+import JobSeeker from './seekercomponents/JobSeeker';
 import './App.css';
 
 const App = () => {
   return (
-    <>
-      <div>
-        <NavBar />
-        <Routes>
-          <Route>
-              <Route path="/" element={<Landing />}></Route>
-              <Route path="/joblist" element={<Joblist />} />
-              <Route path="/login" element={<Login />}></Route>
-              
-              <Route path="/seeker-login" element={<SeekerLogin />}></Route>
-              <Route path="/register" element={<Register />} />
-   
-          </Route>
-        </Routes>
-        <Footer />
-      </div>
-    </>
+    <div>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/joblist" element={<Joblist />} />
+         <Route path="/login" element={<Login />}></Route>
+        <Route path="/employer-login" element={<EmployerLogin />} />
+        <Route path="/employer-signup" element={<EmployerLogin />} />
+        <Route path="/seeker-signup" element={<SeekerLogin />} />
+        <Route path="/seeker-login" element={<SeekerLogin />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/jobseeker/*" element={<JobSeeker />} />
+      </Routes>
+      <Footer />
+    </div>
   );
 };
 
