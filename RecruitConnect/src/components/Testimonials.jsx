@@ -1,10 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ThumbsUp, ThumbsDown } from "lucide-react";
 import "../Testimonials.css";
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [newReview, setNewReview] = useState({
+    yourName: "",
+    currentOccupation: "",
+    feedback: "",
+    rating: 0
+  });
+  const [showForm, setShowForm] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false); // State to track form submission
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:5000/feedback")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => setTestimonials(data))
+      .catch((error) => {
+        console.error("Error fetching reviews:", error);
+      });
+
   const [rating, setRating] = useState(0);
   const [content, setContent] = useState("");
   const [showForm, setShowForm] = useState(false);
@@ -38,6 +60,7 @@ const Testimonials = () => {
     };
 
     fetchTestimonials();
+
   }, []);
 
   const nextTestimonial = () => {
@@ -48,49 +71,87 @@ const Testimonials = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    if (rating < 1 || rating > 5 || !content) {
-      setError("Please provide valid inputs.");
-      return;
-    }
-
-    try {
-      const token = getAuthToken();
-      const response = await fetch("http://127.0.0.1:5000/feedback", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          rating: rating,
-          content: content,
-        }),
-      });
-
-      if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.error || "Network response was not ok");
-      }
-
-      const data = await response.json();
-      setTestimonials((prev) => [...prev, data]);
-      setRating(0);
-      setContent("");
-      setFormSubmitted(true);
-      setShowForm(false);
-      setError("");
-      setMessage("Feedback submitted successfully!");
-    } catch (error) {
-      console.error("Error posting feedback:", error.message);
-      setError(error.message);
-    }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewReview({ ...newReview, [name]: value });
   };
+
+  const handleStarClick = (rating) => {
+    setNewReview({ ...newReview, rating });
+  };
+
+  const handleLike = (id) => {
+    fetch(`http://127.0.0.1:5000/feedback/${id}/like`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((updatedTestimonial) => {
+        setTestimonials(testimonials.map(t =>
+          t.id === id ? updatedTestimonial : t
+        ));
+      })
+      .catch((error) => console.error("Error liking review:", error));
+  };
+
+  const handleDislike = (id) => {
+    fetch(`http://127.0.0.1:5000/feedback/${id}/dislike`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((updatedTestimonial) => {
+        setTestimonials(testimonials.map(t =>
+          t.id === id ? updatedTestimonial : t
+        ));
+      })
+      .catch((error) => console.error("Error disliking review:", error));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch("http://127.0.0.1:5000/feedback", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newReview),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setTestimonials([...testimonials, data]);
+        setNewReview({ yourName: "", currentOccupation: "", feedback: "", rating: 0 });
+        setFormSubmitted(true); // Set form submission state to true
+        setShowForm(false); // Hide the form after submission
+      })
+      .catch((error) => console.error("Error posting review:", error));
+
 
   const handleToggleForm = () => {
     if (formSubmitted) {
+      // If the form was submitted, reset the form and show it again
+      setFormSubmitted(false);
+      setNewReview({ yourName: "", currentOccupation: "", feedback: "", rating: 0 });
       setFormSubmitted(false);
       setRating(0);
       setContent("");
@@ -111,6 +172,7 @@ const Testimonials = () => {
               onClick={prevTestimonial}
               className="testimonial-nav-button testimonial-nav-button-left"
               aria-label="Previous testimonial"
+
             >
               <ChevronLeft size={24} />
             </button>
@@ -119,28 +181,38 @@ const Testimonials = () => {
                 className="testimonial-slider"
                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}
               >
-                {testimonials.map((testimonial, index) => {
-                  const validRating = Number.isInteger(testimonial.rating) && testimonial.rating >= 1 && testimonial.rating <= 5
-                    ? testimonial.rating
-                    : 0; 
-
-                  return (
-                    <div key={index} className="card">
-                      <div className="card-content">
-                        <p className="card-para">"{testimonial.content}"</p>
-                        <h4 className="card-title">{testimonial.reviewer_id}</h4>
-                        <div className="card-rating">
-                          {[...Array(validRating)].map((_, i) => (
-                            <span key={i}>&#9733;</span>
-                          ))}
-                          {[...Array(5 - validRating)].map((_, i) => (
-                            <span key={i}>&#9734;</span>
-                          ))}
-                        </div>
+                {testimonials.map((testimonial) => (
+                  <div key={testimonial.id} className="card">
+                    <div className="card-content">
+                      <p className="card-para">"{testimonial.feedback}"</p>
+                      <h4 className="card-title">{testimonial.yourName}</h4>
+                      <p className="card-para">{testimonial.currentOccupation}</p>
+                      <div className="card-rating">
+                        {[...Array(5)].map((_, i) => (
+                          <span key={i} className={`star ${i < testimonial.rating ? "filled" : ""}`}>&#9733;</span>
+                        ))}
+                      </div>
+                      <div className="like-dislike-buttons">
+                        <button
+                          onClick={() => handleLike(testimonial.id)}
+                          className={`like-button ${testimonial.userLiked ? "active" : ""}`}
+                          aria-label="Like this review"
+                          disabled={testimonial.userLiked || testimonial.userDisliked}
+                        >
+                          <ThumbsUp size={24} />
+                        </button>
+                        <button
+                          onClick={() => handleDislike(testimonial.id)}
+                          className={`dislike-button ${testimonial.userDisliked ? "active" : ""}`}
+                          aria-label="Dislike this review"
+                          disabled={testimonial.userDisliked || testimonial.userLiked}
+                        >
+                          <ThumbsDown size={24} />
+                        </button>
                       </div>
                     </div>
-                  );
-                })}
+                  </div>
+                ))}
               </div>
             </div>
             <button
@@ -162,7 +234,7 @@ const Testimonials = () => {
             </div>
           </div>
         ) : (
-          <p>No testimonials available.</p>
+          <p className="no-testimonials">No testimonials available.</p>
         )}
         <button
           onClick={handleToggleForm}
@@ -172,30 +244,49 @@ const Testimonials = () => {
           {showForm ? "Cancel" : formSubmitted ? "Share Another Review" : "Share My Own Feedback"}
         </button>
         {showForm && (
-          <div>
-            <h2>Submit Feedback</h2>
-            {error && <p className="form-error">{error}</p>}
-            {message && <p className="form-success">{message}</p>}
-            <form onSubmit={handleSubmit} className="testimonial-form">
-              <input
-                type="number"
-                placeholder="Rating (1-5)"
-                value={rating}
-                onChange={(e) => setRating(e.target.value)}
-                min="1"
-                max="5"
-                required
-              />
-              <textarea
-                placeholder="Feedback"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                required
-              />
-              <button type="submit">Submit Feedback</button>
-            </form>
-          </div>
-        )}
+
+          <form onSubmit={handleSubmit} className="testimonial-form">
+            <h3>Share Your Feedback</h3>
+            <input
+              type="text"
+              name="yourName"
+              placeholder="Your Name"
+              value={newReview.yourName}
+              onChange={handleInputChange}
+              required
+              aria-label="Your name"
+            />
+            <input
+              type="text"
+              name="currentOccupation"
+              placeholder="Your Current Occupation"
+              value={newReview.currentOccupation}
+              onChange={handleInputChange}
+              required
+              aria-label="Your current occupation"
+            />
+            <textarea
+              name="feedback"
+              placeholder="Your Feedback"
+              value={newReview.feedback}
+              onChange={handleInputChange}
+              required
+              aria-label="Your feedback"
+            />
+            <div className="rating-container">
+              {[...Array(5)].map((_, i) => (
+                <span
+                  key={i}
+                  className={`star ${i < newReview.rating ? "filled" : ""}`}
+                  onClick={() => handleStarClick(i + 1)}
+                  aria-label={`Rate ${i + 1} star${i > 0 ? 's' : ''}`}
+                >
+                  &#9733;
+                </span>
+              ))}
+            </div>
+            <button type="submit">Submit Review</button>
+          </form>
       </div>
     </section>
   );
