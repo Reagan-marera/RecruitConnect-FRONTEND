@@ -26,6 +26,41 @@ const Testimonials = () => {
       .catch((error) => {
         console.error("Error fetching reviews:", error);
       });
+
+  const [rating, setRating] = useState(0);
+  const [content, setContent] = useState("");
+  const [showForm, setShowForm] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState(""); // For feedback submission messages
+
+  const getAuthToken = () => localStorage.getItem("token");
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const token = getAuthToken();
+        const response = await fetch("http://127.0.0.1:5000/feedback", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        console.log("Fetched testimonials:", data); // Debugging data
+        setTestimonials(data);
+      } catch (error) {
+        console.error("Error fetching testimonials:", error);
+        setError("Failed to fetch testimonials.");
+      }
+    };
+
+    fetchTestimonials();
+
   }, []);
 
   const nextTestimonial = () => {
@@ -35,6 +70,7 @@ const Testimonials = () => {
   const prevTestimonial = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
   };
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -109,13 +145,17 @@ const Testimonials = () => {
         setShowForm(false); // Hide the form after submission
       })
       .catch((error) => console.error("Error posting review:", error));
-  };
+
 
   const handleToggleForm = () => {
     if (formSubmitted) {
       // If the form was submitted, reset the form and show it again
       setFormSubmitted(false);
       setNewReview({ yourName: "", currentOccupation: "", feedback: "", rating: 0 });
+      setFormSubmitted(false);
+      setRating(0);
+      setContent("");
+      setMessage("");
     }
     setShowForm((prev) => !prev);
   };
@@ -124,12 +164,15 @@ const Testimonials = () => {
     <section className="testimonial-section">
       <div className="testimonial-container">
         <h2 className="testimonial-heading">What Our Users Say</h2>
+        {error && <p className="testimonial-error-message">{error}</p>}
+        {message && <p className="testimonial-success-message">{message}</p>}
         {testimonials.length > 0 ? (
           <div className="testimonial-wrapper">
             <button
               onClick={prevTestimonial}
               className="testimonial-nav-button testimonial-nav-button-left"
               aria-label="Previous testimonial"
+
             >
               <ChevronLeft size={24} />
             </button>
@@ -201,6 +244,7 @@ const Testimonials = () => {
           {showForm ? "Cancel" : formSubmitted ? "Share Another Review" : "Share My Own Feedback"}
         </button>
         {showForm && (
+
           <form onSubmit={handleSubmit} className="testimonial-form">
             <h3>Share Your Feedback</h3>
             <input
@@ -243,7 +287,6 @@ const Testimonials = () => {
             </div>
             <button type="submit">Submit Review</button>
           </form>
-        )}
       </div>
     </section>
   );

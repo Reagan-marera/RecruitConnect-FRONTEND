@@ -9,7 +9,7 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "user" // Default role
+    role: "user" 
   });
 
   const [error, setError] = useState("");
@@ -116,3 +116,4 @@ const Register = () => {
 };
 
 export default Register;
+
