@@ -1,5 +1,6 @@
 import React from "react";
 import "../Footer.css";
+import About from "../pages/About";
 
 function Footer() {
   return (
@@ -14,10 +15,10 @@ function Footer() {
           <h4>Quick Links</h4>
           <ul>
             <li>
-              <a href="/">landing</a>
+              <a href="/">Home</a>
             </li>
             <li>
-              <a href="/jobs">Jobs</a>
+              <a href="/joblist">Jobs</a>
             </li>
             <li>
               <a href="/about">About</a>
@@ -29,7 +30,7 @@ function Footer() {
               <a href="/terms">Terms of Service</a>
             </li>
             <li>
-              <a href="/privacy">Privacy Policy</a>
+              <a href="/policy">Privacy Policy</a>
             </li>
           </ul>
         </div>
