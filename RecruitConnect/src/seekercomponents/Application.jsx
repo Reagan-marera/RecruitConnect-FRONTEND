@@ -1,7 +1,13 @@
 import React from 'react';
 import './Application.css'; 
+import { useNavigate } from 'react-router-dom';
 
 const Application = () => {
+  const navigate = useNavigate();
+
+  const handleFindJobClick = () =>{
+    navigate('/joblist');
+  }
   return (
     <div className="card">
       <div className="card-header">
@@ -9,7 +15,7 @@ const Application = () => {
       </div>
       <div className="card-body">
         <p>You do not have any job applications yet</p>
-        <button className="find-job-button" onClick={() => alert("Find your dream job")}>Find Dream Job</button>
+        <button className="find-job-button" onClick={handleFindJobClick}>Find Dream Job</button>
       </div>
     </div>
   );
