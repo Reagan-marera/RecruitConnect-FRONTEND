@@ -14,7 +14,6 @@ const Application = () => {
         Application page.
       </div>
       <div className="card-body">
-        <p>You do not have any job applications yet</p>
         <button className="find-job-button" onClick={handleFindJobClick}>Find Dream Job</button>
       </div>
     </div>
