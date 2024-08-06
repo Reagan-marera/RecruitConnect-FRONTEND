@@ -4,14 +4,13 @@ import './Profile.css';
 
 const Profile = () => {
   const [user, setUser] = useState({
-    name: '',
+    username: '',
     email: '',
     phone: '',
-    location: '',
+    address: '',
     bio: '',
     resume: '',
     profilePicture: ''
-
   });
   const [message, setMessage] = useState('');
   const [editMode, setEditMode] = useState(false);
@@ -42,26 +41,30 @@ const Profile = () => {
   };
 
   const handleFileChange = (e) => {
+    const { name, files } = e.target;
     setUser(prevUser => ({
       ...prevUser,
-      profilePicture: e.target.files[0],
+      [name]: files[0],
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('name', user.name);
+    formData.append('username', user.name);
     formData.append('email', user.email);
     formData.append('phone', user.phone);
-    formData.append('location', user.location);
+    formData.append('address', user.address);
     formData.append('bio', user.bio);
     if (user.profilePicture) {
       formData.append('profilePicture', user.profilePicture);
     }
+    if (user.resume) {
+      formData.append('resume', user.resume);
+    }
 
     try {
-      const response = await axios.put('http://127.0.0.1:5000/api/user', formData, {
+      const response = await axios.post('http://127.0.0.1:5000/api/user', formData, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           'Content-Type': 'multipart/form-data'
@@ -81,8 +84,9 @@ const Profile = () => {
       {editMode ? (
         <form onSubmit={handleSubmit}>
           <label>
-            Name:
-            <input type="text" name="name" value={user.name} onChange={handleChange} />
+            Username:
+            <input type="text" name="username" value={user.username}
+             onChange={handleChange} />
           </label>
           <label>
             Email:
@@ -93,8 +97,8 @@ const Profile = () => {
             <input type="tel" name="phone" value={user.phone} onChange={handleChange} />
           </label>
           <label>
-            Location:
-            <input type="text" name="location" value={user.location} onChange={handleChange} />
+            Address:
+            <input type="text" name="address" value={user.address} onChange={handleChange} />
           </label>
           <label>
             Bio:
@@ -104,17 +108,21 @@ const Profile = () => {
             Profile Picture:
             <input type="file" name="profilePicture" onChange={handleFileChange} />
           </label>
-          
+          <label>
+            Resume:
+            <input type="file" name="resume" onChange={handleFileChange} />
+          </label>
           <button type="submit">Save</button>
         </form>
       ) : (
         <div className="profile-view">
-          <img src={user.profilePicture} alt="Profile" />
-          <p><strong>Name:</strong> {user.name}</p>
+          {user.profilePicture && <img src={URL.createObjectURL(user.profilePicture)} alt="Profile" />}
+          <p><strong>Username:</strong> {user.name}</p>
           <p><strong>Email:</strong> {user.email}</p>
           <p><strong>Phone:</strong> {user.phone}</p>
-          <p><strong>Location:</strong> {user.location}</p>
+          <p><strong>Address:</strong> {user.location}</p>
           <p><strong>Bio:</strong> {user.bio}</p>
+          {user.resume && <a href={URL.createObjectURL(user.resume)} target="_blank" rel="noopener noreferrer">View Resume</a>}
           <button onClick={() => setEditMode(true)}>Edit</button>
         </div>
       )}

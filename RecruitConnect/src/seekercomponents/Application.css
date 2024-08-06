@@ -7,11 +7,11 @@
   background-color: #0323696b;
   padding: 24px;
   border-radius: 9px;
-  width: 200px; /* Fixed width for the navbar */
+  width: 200px; 
   margin-right: 20px;
-  flex-shrink: 0; /* Prevent shrinking */
-  position: sticky; /* Sticky positioning */
-  top: 40px; /* Adjust as needed */
+  flex-shrink: 0; 
+  position: sticky; 
+  top: 40px; 
 }
 
 .jobseeker-content {
@@ -31,28 +31,28 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f8f9fa; /* Light background color for the card */
+  background-color: #f8f9fa; 
   box-sizing: border-box;
 }
 
 .card-header {
-  background-color: #c7c7c7; /* Grey background */
+  background-color: #c7c7c7;
   color: black;
   padding: 10px 20px;
   border-radius: 5px;
   font-size: 1.5rem;
   width: 100%;
   text-align: center;
-  margin-bottom: 20px; /* Space below the header */
+  margin-bottom: 20px;
 }
 
 .card-body {
-  background-color: white; /* White background for the content */
+  background-color: white;
   color: black;
   padding: 20px;
   border-radius: 5px;
   width: 100%;
-  max-width: 500px; /* Optional: Limit max width of the card */
+  max-width: 500px;
   text-align: center;
   box-sizing: border-box;
 }
@@ -76,7 +76,7 @@
 .card-body::after {
   content: '';
   display: block;
-  height: 100px; /* Space at the bottom of the card */
+  height: 100px;
 }
 @media (max-width: 768px) {
   .jobseeker-container {
@@ -89,7 +89,7 @@
   }
   
   .card {
-    width: 100%; /* Full width on smaller screens */
-    max-width: none; /* Remove max-width constraint */
+    width: 100%; 
+    max-width: none; 
   }
 }
