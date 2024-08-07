@@ -13,6 +13,7 @@ import Contact from './pages/Contact';
 import TermsOfService from './pages/terms';
 import PrivacyPolicy from './pages/Policy';
 import ForgotPassword from './components/Forgot Password';
+import JobPostingForm from './components/JobPostingForm';
 import './App.css';
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/policy" element={<PrivacyPolicy />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/jobposting " element={<JobPostingForm />} />
       </Routes>
       <Footer />
     </div>

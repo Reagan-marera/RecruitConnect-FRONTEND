@@ -39,7 +39,7 @@ const Employerlogin = () => {
       setError(error.response?.data?.error || "Failed to login. Please try again.");
     } finally {
       setLoading(false);
-    }
+    };
   };
 
   return (
