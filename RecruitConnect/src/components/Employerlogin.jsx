@@ -34,7 +34,7 @@ const Employerlogin = () => {
       const response = await axios.post("http://127.0.0.1:5000/login", formData);
       localStorage.setItem("token", response.data.access_token);
       alert("Employer logged in successfully!");
-      navigate("/"); // Redirect to home page
+      navigate("/"); 
     } catch (error) {
       setError(error.response?.data?.error || "Failed to login. Please try again.");
     } finally {
@@ -53,7 +53,7 @@ const Employerlogin = () => {
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
-          required
+           required
           className="employer-login-input"
         />
         <input
