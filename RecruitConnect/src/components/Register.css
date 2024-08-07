@@ -1,0 +1,109 @@
+/* Container for registration form */
+.register-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 10px; /* Slightly rounded corners for a modern look */
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  background-color: #ffffff; /* White background for a clean look */
+}
+
+/* Header for registration form */
+.register-header {
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  color: #4285f4; /* Google blue color */
+  margin-bottom: 1.5rem;
+}
+
+/* Form styling */
+.register-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Input fields styling */
+.register-input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc; /* Light grey border for inputs */
+  border-radius: 4px;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  background-color: #f1f1f1; /* Light background for inputs */
+  color: #333; /* Dark text for readability */
+}
+
+.register-input:focus {
+  border-color: #4285f4; /* Google blue color for focus */
+  outline: none;
+}
+
+.register-input::placeholder {
+  color: #999; /* Light grey placeholder text */
+}
+
+/* Button styling */
+.register-button {
+  padding: 10px 15px;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  color: #ffffff; /* White text */
+  background-color: #4285f4; /* Google blue color */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register-button:hover {
+  background-color: #357ae8; /* Darker blue for hover effect */
+}
+
+/* Switch form link styling */
+.register-switch-form {
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+  color: #333; /* Dark text color */
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.register-switch-form button {
+  background: none;
+  border: none;
+  color: #4285f4; /* Google blue color */
+  cursor: pointer;
+  margin-left: 5px;
+  font-size: 16px;
+}
+
+.register-switch-form button:hover {
+  text-decoration: underline;
+}
+
+/* Error message styling */
+.register-error-message {
+  color: #d93025; /* Google red color */
+  margin-bottom: 15px;
+  font-family: Arial, sans-serif;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .register-container {
+    padding: 15px;
+  }
+
+  .register-input, .register-button {
+    color: #333; /* Dark text for better readability */
+    background-color: #f1f1f1; /* Light background for inputs and button */
+    border-color: #ccc; /* Light grey border */
+  }
+
+  .register-switch-form {
+    font-size: 14px;
+  }
+}

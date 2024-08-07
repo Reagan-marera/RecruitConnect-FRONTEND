@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import "../Loginform.css";
 
 const Seekerlogin = () => {
@@ -17,7 +18,7 @@ const Seekerlogin = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token && location.pathname !== "/seeker-login") {
-      navigate("/"); // Redirect to home if token found and not on login page
+      navigate("/"); 
     }
   }, [navigate, location.pathname]);
 
@@ -34,7 +35,7 @@ const Seekerlogin = () => {
       const response = await axios.post("http://127.0.0.1:5000/login", formData);
       localStorage.setItem("token", response.data.access_token);
       alert("Seeker logged in successfully!");
-      navigate("/jobseeker"); // Redirect to home page
+      navigate("/jobseeker"); 
     } catch (error) {
       setError(error.response?.data?.error || "Failed to login. Please try again.");
     } finally {
@@ -43,34 +44,55 @@ const Seekerlogin = () => {
   };
 
   return (
-    <div className="employer-login-container">
-      <h2 className="employer-login-header">Seeker Login</h2>
-      {error && <p className="employer-error-message">{error}</p>}
-      <form onSubmit={handleSubmit} className="employer-login-form">
-        <input
+    <motion.div 
+      className="login-container"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <h2 className="login-header">Seeker Login</h2>
+      {error && <p className="error-message">{error}</p>}
+      <motion.form 
+        onSubmit={handleSubmit} 
+        className="login-form"
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        <motion.input
           type="email"
           name="email"
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
           required
-          className="employer-login-input"
+          className="login-input"
+          whileFocus={{ scale: 1.05 }}
+          transition={{ duration: 0.2 }}
         />
-        <input
+        <motion.input
           type="password"
           name="password"
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
           required
-          className="employer-login-input"
+          className="login-input"
+          whileFocus={{ scale: 1.05 }}
+          transition={{ duration: 0.2 }}
         />
-        <button type="submit" disabled={loading} className="employer-login-button">
+        <motion.button 
+          type="submit" 
+          disabled={loading} 
+          className="login-button"
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.3 }}
+        >
           {loading ? "Submitting..." : "Login"}
-        </button>
-      </form>
+        </motion.button>
+      </motion.form>
       <Link to="/forgot-password" className="forgot-password-link">Forgot password?</Link>
-    </div>
+    </motion.div>
   );
 };
 
