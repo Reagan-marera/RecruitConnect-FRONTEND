@@ -6,11 +6,11 @@ const Profile = () => {
   const [user, setUser] = useState({
     username: '',
     email: '',
-    phone: '',
+    phone_number: '',
     address: '',
     bio: '',
     resume: '',
-    profilePicture: ''
+    picture_url: ''
   });
   const [message, setMessage] = useState('');
   const [editMode, setEditMode] = useState(false);
@@ -18,7 +18,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:5000/user', {
+        const response = await axios.get('http://127.0.0.1:5000/profile', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
           }
@@ -51,20 +51,20 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('username', user.name);
+    formData.append('username', user.username);
     formData.append('email', user.email);
-    formData.append('phone', user.phone);
+    formData.append('phone', user.phone_number);
     formData.append('address', user.address);
     formData.append('bio', user.bio);
-    if (user.profilePicture) {
-      formData.append('profilePicture', user.profilePicture);
+    if (user.picture_url) {
+      formData.append('profilePicture', user.picture_url);
     }
     if (user.resume) {
       formData.append('resume', user.resume);
     }
 
     try {
-      const response = await axios.post('http://127.0.0.1:5000/api/user', formData, {
+      const response = await axios.post('http://127.0.0.1:5000/profile', formData, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           'Content-Type': 'multipart/form-data'
@@ -94,7 +94,7 @@ const Profile = () => {
           </label>
           <label>
             Phone:
-            <input type="tel" name="phone" value={user.phone} onChange={handleChange} />
+            <input type="tel" name="phone" value={user.phone_number} onChange={handleChange} />
           </label>
           <label>
             Address:
@@ -116,11 +116,11 @@ const Profile = () => {
         </form>
       ) : (
         <div className="profile-view">
-          {user.profilePicture && <img src={URL.createObjectURL(user.profilePicture)} alt="Profile" />}
-          <p><strong>Username:</strong> {user.name}</p>
+          {user.profilePicture && <img src={URL.createObjectURL(user.picture_url)} alt="Profile" />}
+          <p><strong>Username:</strong> {user.username}</p>
           <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Phone:</strong> {user.phone}</p>
-          <p><strong>Address:</strong> {user.location}</p>
+          <p><strong>Phone:</strong> {user.phone_number}</p>
+          <p><strong>Address:</strong> {user.address}</p>
           <p><strong>Bio:</strong> {user.bio}</p>
           {user.resume && <a href={URL.createObjectURL(user.resume)} target="_blank" rel="noopener noreferrer">View Resume</a>}
           <button onClick={() => setEditMode(true)}>Edit</button>

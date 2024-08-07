@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./Register.css";
 
+
 const Register = () => {
   const [formData, setFormData] = useState({
     username: "",

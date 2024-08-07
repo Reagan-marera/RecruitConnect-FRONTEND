@@ -3,8 +3,8 @@
   max-width: 600px;
   margin: 0 auto;
   padding: 30px;
-  border-radius: 8px; /* Slightly rounded corners for a modern look */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  border-radius: 10px; /* Slightly rounded corners for a modern look */
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
   background-color: #ffffff; /* White background for a clean look */
 }
 
