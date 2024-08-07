@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import "../Loginform.css";
@@ -9,27 +9,7 @@ const ForgotPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [userRole, setUserRole] = useState(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Fetch the user role from backend or local storage
-    const fetchUserRole = async () => {
-      try {
-        const token = localStorage.getItem('jwtToken'); // Adjust according to your token storage
-        const response = await axios.get("http://127.0.0.1:5000/get_user_role", {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setUserRole(response.data.role);
-      } catch (err) {
-        setError('Unable to determine user role.');
-      }
-    };
-
-    fetchUserRole();
-  }, []);
 
   const handlePasswordReset = async (e) => {
     e.preventDefault();
@@ -43,20 +23,20 @@ const ForgotPassword = () => {
     }
 
     try {
-      const token = localStorage.getItem('jwtToken'); // Adjust according to your token storage
-      await axios.post("http://127.0.0.1:5000/reset_password", { email, new_password: newPassword }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      
+      // Fetch the user role based on email
+      const roleResponse = await axios.post("http://127.0.0.1:5000/get_user_role_by_email", { email });
+      const userRole = roleResponse.data.role;
+
+      await axios.post("http://127.0.0.1:5000/reset_password", { email, new_password: newPassword });
+
       // Redirect based on user role
-      if (formData.role === "user") {
-        navigate("/seeker-login");
-      } else if (formData.role === "employer") {
+      if (userRole === 'employer') {
         navigate("/employer-login");
-      }  
-      
+      } else if (userRole === 'user') {
+        navigate("/seeker-login");
+      } else {
+        navigate("/"); // Fallback
+      }
     } catch (err) {
       setError(err.response?.data?.error || "Failed to reset password. Please try again.");
     } finally {
