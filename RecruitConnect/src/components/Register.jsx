@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import "./Register.css";
 
 const Register = () => {
@@ -57,11 +58,38 @@ const Register = () => {
   };
 
   return (
-    <div className="register-container">
-      <h2 className="register-header">Register</h2>
-      {error && <p className="register-error-message">{error}</p>}
-      <form onSubmit={handleSubmit} className="register-form">
-        <input
+    <motion.div
+      className="register-container"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.h2
+        className="register-header"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+      >
+        Register
+      </motion.h2>
+      {error && (
+        <motion.p
+          className="register-error-message"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {error}
+        </motion.p>
+      )}
+      <motion.form
+        onSubmit={handleSubmit}
+        className="register-form"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+      >
+        <motion.input
           type="text"
           name="username"
           placeholder="Username"
@@ -69,8 +97,10 @@ const Register = () => {
           onChange={handleChange}
           required
           className="register-input"
+          whileFocus={{ scale: 1.05 }}
+          whileHover={{ scale: 1.05 }}
         />
-        <input
+        <motion.input
           type="email"
           name="email"
           placeholder="Email"
@@ -78,8 +108,10 @@ const Register = () => {
           onChange={handleChange}
           required
           className="register-input"
+          whileFocus={{ scale: 1.05 }}
+          whileHover={{ scale: 1.05 }}
         />
-        <input
+        <motion.input
           type="password"
           name="password"
           placeholder="Password"
@@ -87,8 +119,10 @@ const Register = () => {
           onChange={handleChange}
           required
           className="register-input"
+          whileFocus={{ scale: 1.05 }}
+          whileHover={{ scale: 1.05 }}
         />
-        <input
+        <motion.input
           type="password"
           name="confirmPassword"
           placeholder="Confirm Password"
@@ -96,24 +130,33 @@ const Register = () => {
           onChange={handleChange}
           required
           className="register-input"
+          whileFocus={{ scale: 1.05 }}
+          whileHover={{ scale: 1.05 }}
         />
-        <select
+        <motion.select
           name="role"
           value={formData.role}
           onChange={handleChange}
           required
           className="register-input"
+          whileFocus={{ scale: 1.05 }}
+          whileHover={{ scale: 1.05 }}
         >
           <option value="user">Job Seeker</option>
           <option value="employer">Employer</option>
-        </select>
-        <button type="submit" disabled={loading} className="register-button">
+        </motion.select>
+        <motion.button
+          type="submit"
+          disabled={loading}
+          className="register-button"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
           {loading ? "Submitting..." : "Register"}
-        </button>
-      </form>
-    </div>
+        </motion.button>
+      </motion.form>
+    </motion.div>
   );
 };
 
 export default Register;
-

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import "../Loginform.css";
 
 const ForgotPassword = () => {
@@ -8,7 +9,7 @@ const ForgotPassword = () => {
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [step, setStep] = useState(1); 
+  const [step, setStep] = useState(1);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [otpExpired, setOtpExpired] = useState(false);
@@ -22,7 +23,7 @@ const ForgotPassword = () => {
 
     try {
       await axios.post("http://127.0.0.1:5000/request_reset_password", { email });
-      setStep(2); 
+      setStep(2);
     } catch (err) {
       setError(err.response?.data?.error || "Failed to send OTP. Please try again.");
     } finally {
@@ -39,7 +40,7 @@ const ForgotPassword = () => {
       const response = await axios.post("http://127.0.0.1:5000/verify_otp", { email, otp });
 
       if (response.data.message === "OTP is valid") {
-        setStep(3); 
+        setStep(3);
       } else if (response.data.request_new_otp) {
         setOtpExpired(true);
         setError(response.data.message);
@@ -95,7 +96,7 @@ const ForgotPassword = () => {
         } else if (userRole === 'user') {
           navigate("/seeker-login");
         } else {
-          navigate("/"); 
+          navigate("/");
         }
       } else {
         setError("Failed to reset password. Please try again.");
@@ -108,40 +109,69 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="forgot-password-container">
+    <motion.div 
+      className="forgot-password-container"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       {step === 1 && (
-        <form onSubmit={handleRequestOtp} className="forgot-password-form">
+        <motion.form 
+          onSubmit={handleRequestOtp} 
+          className="forgot-password-form"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <h2>Forgot Password</h2>
           {error && <p className="error-message">{error}</p>}
-          <input
+          <motion.input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
             required
             className="input"
+            whileFocus={{ scale: 1.05, borderColor: '#4285f4' }}
           />
-          <button type="submit" disabled={loading}>
+          <motion.button 
+            type="submit" 
+            disabled={loading}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             {loading ? "Sending OTP..." : "Send OTP"}
-          </button>
-        </form>
+          </motion.button>
+        </motion.form>
       )}
 
       {step === 2 && (
-        <form onSubmit={handleVerifyOtp} className="forgot-password-form">
+        <motion.form 
+          onSubmit={handleVerifyOtp} 
+          className="forgot-password-form"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <h2>Verify OTP</h2>
           {error && <p className="error-message">{error}</p>}
-          <input
+          <motion.input
             type="text"
             value={otp}
             onChange={(e) => setOtp(e.target.value)}
             placeholder="Enter OTP"
             required
             className="input"
+            whileFocus={{ scale: 1.05, borderColor: '#4285f4' }}
           />
-          <button type="submit" disabled={loading}>
+          <motion.button 
+            type="submit" 
+            disabled={loading}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             {loading ? "Verifying OTP..." : "Verify OTP"}
-          </button>
+          </motion.button>
           {otpExpired && (
             <p>
               Did time run out? 
@@ -150,35 +180,48 @@ const ForgotPassword = () => {
               </button>
             </p>
           )}
-        </form>
+        </motion.form>
       )}
 
       {step === 3 && (
-        <form onSubmit={handleResetPassword} className="forgot-password-form">
+        <motion.form 
+          onSubmit={handleResetPassword} 
+          className="forgot-password-form"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <h2>Reset Password</h2>
           {error && <p className="error-message">{error}</p>}
-          <input
+          <motion.input
             type="password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             placeholder="New password"
             required
             className="input"
+            whileFocus={{ scale: 1.05, borderColor: '#4285f4' }}
           />
-          <input
+          <motion.input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm new password"
             required
             className="input"
+            whileFocus={{ scale: 1.05, borderColor: '#4285f4' }}
           />
-          <button type="submit" disabled={loading}>
+          <motion.button 
+            type="submit" 
+            disabled={loading}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             {loading ? "Resetting Password..." : "Reset Password"}
-          </button>
-        </form>
+          </motion.button>
+        </motion.form>
       )}
-    </div>
+    </motion.div>
   );
 };
 

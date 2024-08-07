@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import "../Loginform.css";
 
 const Employerlogin = () => {
@@ -43,11 +44,33 @@ const Employerlogin = () => {
   };
 
   return (
-    <div className="login-container">
-      <h2 className="login-header">Employer Login</h2>
-      {error && <p className="error-message">{error}</p>}
-      <form onSubmit={handleSubmit} className="login-form">
-        <input
+    <motion.div
+      className="login-container"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.h2
+        className="login-header"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        Employer Login
+      </motion.h2>
+      {error && <motion.p className="error-message"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >{error}</motion.p>}
+      <motion.form
+        onSubmit={handleSubmit}
+        className="login-form"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+      >
+        <motion.input
           type="email"
           name="email"
           placeholder="Email"
@@ -55,8 +78,9 @@ const Employerlogin = () => {
           onChange={handleChange}
           required
           className="login-input"
+          whileFocus={{ scale: 1.02 }}
         />
-        <input
+        <motion.input
           type="password"
           name="password"
           placeholder="Password"
@@ -64,13 +88,26 @@ const Employerlogin = () => {
           onChange={handleChange}
           required
           className="login-input"
+          whileFocus={{ scale: 1.02 }}
         />
-        <button type="submit" disabled={loading} className="login-button">
+        <motion.button
+          type="submit"
+          disabled={loading}
+          className="login-button"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
           {loading ? "Submitting..." : "Login"}
-        </button>
-      </form>
-      <Link to="/forgot-password" className="forgot-password-link">Forgot password?</Link>
-    </div>
+        </motion.button>
+      </motion.form>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.6 }}
+      >
+        <Link to="/forgot-password" className="forgot-password-link">Forgot password?</Link>
+      </motion.div>
+    </motion.div>
   );
 };
 
