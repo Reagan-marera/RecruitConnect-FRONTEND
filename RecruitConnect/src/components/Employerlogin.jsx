@@ -1,20 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import "./Employerlogin.css";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import "../Loginform.css";
 
 const Employerlogin = () => {
   const [formData, setFormData] = useState({
-    company_name: "",
-    contact_email: "",
-    address: "",
-    phone_number: ""
+    email: "",
+    password: "",
   });
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [jwtToken, setJwtToken] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token && location.pathname !== "/employer-login") {
+      navigate("/"); 
+    }
+  }, [navigate, location.pathname]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,65 +32,82 @@ const Employerlogin = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://127.0.0.1:5000/employers", formData, {
-        headers: {
-          Authorization: `Bearer ${jwtToken}`
-        }
-      });
-      
-      alert("Employer added successfully!");
+      const response = await axios.post("http://127.0.0.1:5000/login", formData);
+      localStorage.setItem("token", response.data.access_token);
+      alert("Employer logged in successfully!");
       navigate("/"); 
     } catch (error) {
-      setError(error.response?.data?.error || "Failed to add employer. Please try again.");
+      setError(error.response?.data?.error || "Failed to login. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="employer-login-container">
-      <h2 className="employer-login-header">Add Employer</h2>
-      {error && <p className="employer-error-message">{error}</p>}
-      <form onSubmit={handleSubmit} className="employer-login-form">
-        <input
-          type="text"
-          name="company_name"
-          placeholder="Company Name"
-          value={formData.company_name}
-          onChange={handleChange}
-          required
-          className="employer-login-input"
-        />
-        <input
+    <motion.div
+      className="login-container"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.h2
+        className="login-header"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        Employer Login
+      </motion.h2>
+      {error && <motion.p className="error-message"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >{error}</motion.p>}
+      <motion.form
+        onSubmit={handleSubmit}
+        className="login-form"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+      >
+        <motion.input
           type="email"
-          name="contact_email"
-          placeholder="Contact Email"
-          value={formData.contact_email}
+          name="email"
+          placeholder="Email"
+          value={formData.email}
           onChange={handleChange}
           required
-          className="employer-login-input"
+          className="login-input"
+          whileFocus={{ scale: 1.02 }}
         />
-        <input
-          type="text"
-          name="address"
-          placeholder="Address"
-          value={formData.address}
+        <motion.input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
           onChange={handleChange}
-          className="employer-login-input"
+          required
+          className="login-input"
+          whileFocus={{ scale: 1.02 }}
         />
-        <input
-          type="text"
-          name="phone_number"
-          placeholder="Phone Number"
-          value={formData.phone_number}
-          onChange={handleChange}
-          className="employer-login-input"
-        />
-        <button type="submit" disabled={loading} className="employer-login-button">
-          {loading ? "Submitting..." : "Add Employer"}
-        </button>
-      </form>
-    </div>
+        <motion.button
+          type="submit"
+          disabled={loading}
+          className="login-button"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {loading ? "Submitting..." : "Login"}
+        </motion.button>
+      </motion.form>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.6 }}
+      >
+        <Link to="/forgot-password" className="forgot-password-link">Forgot password?</Link>
+      </motion.div>
+    </motion.div>
   );
 };
 

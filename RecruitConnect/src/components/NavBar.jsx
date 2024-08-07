@@ -1,18 +1,15 @@
 import React, { useState } from "react";
-import {Link} from 'react-router-dom'
-
+import { Link } from 'react-router-dom';
 import "../Navbar.css";
 
 const Navbar = () => {
   const [dropdown, setDropdown] = useState({
-    jobSeeker: false,
-    employer: false
+    login: false
   });
 
   const toggleDropdown = (type) => {
     setDropdown((prev) => ({
-      jobSeeker: type === "jobSeeker" ? !prev.jobSeeker : false,
-      employer: type === "employer" ? !prev.employer : false
+      login: type === "login" ? !prev.login : false
     }));
   };
 
@@ -40,23 +37,17 @@ const Navbar = () => {
         <div className="navbar-links">
           <Link to="/">Home</Link>
           <NavItem
-            title="Job-Seeker"
-            isOpen={dropdown.jobSeeker}
-            toggle={() => toggleDropdown("jobSeeker")}
+            title="Login"
+            isOpen={dropdown.login}
+            toggle={() => toggleDropdown("login")}
           >
-            <DropdownItem to="/seeker-login">Log In</DropdownItem>
-            <DropdownItem to="/seeker-signup">Sign Up</DropdownItem>
+            <DropdownItem to="/employer-login">As Employer</DropdownItem>
+            <DropdownItem to="/seeker-login">As Job-Seeker</DropdownItem>
           </NavItem>
-          <NavItem
-            title="Employer"
-            isOpen={dropdown.employer}
-            toggle={() => toggleDropdown("employer")}
-          >
-            <DropdownItem to="/employer-login">Log In</DropdownItem>
-            <DropdownItem to="/employer-signup">Sign Up</DropdownItem>
-          </NavItem>
+          <Link to="/register" className="nav-button">
+            Register
+          </Link>
         </div>
-  
       </div>
     </nav>
   );

@@ -1,0 +1,50 @@
+/* terms.css */
+
+.terms-container, .privacy-container {
+  background-color: #ffffff; /* White background for clarity */
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+  max-width: 900px;
+}
+
+.terms-header, .privacy-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.terms-header h1, .privacy-header h1 {
+  font-size: 2.5rem;
+  color: #333333; /* Black color for headings */
+  margin-top: 0.5rem;
+}
+
+.terms-header svg, .privacy-header svg {
+  color: #333333; /* Black color for icons */
+}
+
+.terms-content, .privacy-content {
+  font-size: 1rem;
+  color: #333333; /* Black text for readability */
+}
+
+.terms-section, .privacy-section {
+  margin-bottom: 2rem;
+}
+
+.terms-section h2, .privacy-section h2 {
+  font-size: 1.75rem;
+  color: #333333; /* Black color for section titles */
+  border-bottom: 2px solid #333333; /* Black underline for section titles */
+  padding-bottom: 0.5rem;
+}
+
+a {
+  color: #333333; /* Black for links */
+  text-decoration: none; /* No underline for links */
+}
+
+a:hover {
+  color: #000000; /* Darker black on hover for links */
+}

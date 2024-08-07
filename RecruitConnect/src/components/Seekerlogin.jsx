@@ -1,19 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import "./Seekerlogin.css"; 
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import "../Loginform.css";
 
 const Seekerlogin = () => {
-  const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
-    username: "",
     email: "",
-    password: ""
+    password: "",
   });
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token && location.pathname !== "/seeker-login") {
+      navigate("/"); 
+    }
+  }, [navigate, location.pathname]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,98 +30,69 @@ const Seekerlogin = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
-    try {
-      const url = isLogin
-        ? "http://127.0.0.1:5000/login"
-        : "http://127.0.0.1:5000/register";
-      const response = await axios.post(url, formData);
 
-      if (isLogin) {
-        // Save the JWT token in local storage or context
-        localStorage.setItem("token", response.data.access_token);
-        // Redirect to the home page
-        navigate("/");
-      } else {
-        // Registration success
-        setShowModal(true);
-        setIsLogin(true); // Switch to login form
-        setFormData({ username: "", email: "", password: "" }); // Clear form fields
-      }
+    try {
+      const response = await axios.post("http://127.0.0.1:5000/login", formData);
+      localStorage.setItem("token", response.data.access_token);
+      alert("Seeker logged in successfully!");
+      navigate("/jobseeker"); 
     } catch (error) {
-      if (isLogin) {
-        // Handle login specific error
-        setError("User not found. Please register.");
-      } else {
-        // Handle registration error
-        setError(error.response?.data?.error || "Failed to register. Please try again.");
-      }
-      console.error(error);
+      setError(error.response?.data?.error || "Failed to login. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="seeker-login-page">
-      <div className="seeker-login-container">
-        <h2>{isLogin ? "Job-Seeker Login" : "Job-Seeker Register"}</h2>
-        {error && <p className="seeker-error-message">{error}</p>}
-        <form onSubmit={handleSubmit}>
-          {!isLogin && (
-            <div className="seeker-form-field">
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                value={formData.username}
-                onChange={handleChange}
-                className="seeker-login-input"
-                required
-              />
-            </div>
-          )}
-          <div className="seeker-form-field">
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              className="seeker-login-input"
-              required
-            />
-          </div>
-          <div className="seeker-form-field">
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              className="seeker-login-input"
-              required
-            />
-          </div>
-          <button type="submit" disabled={loading} className="seeker-login-button seeker-btn-primary">
-            {loading ? "Submitting..." : isLogin ? "Login" : "Register"}
-          </button>
-          <div className="seeker-switch-form">
-            {isLogin ? "Don't have an account? " : "Already have an account? "}
-            <button type="button" onClick={() => setIsLogin(!isLogin)} className="seeker-btn-link">
-              {isLogin ? "Register" : "Login"}
-            </button>
-          </div>
-        </form>
-        {showModal && (
-          <div className="seeker-modal">
-            <div className="seeker-modal-content">
-              <span className="seeker-close" onClick={() => setShowModal(false)}>&times;</span>
-              <p>Registration success. Please log in.</p>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+    <motion.div 
+      className="login-container"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <h2 className="login-header">Seeker Login</h2>
+      {error && <p className="error-message">{error}</p>}
+      <motion.form 
+        onSubmit={handleSubmit} 
+        className="login-form"
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        <motion.input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+          className="login-input"
+          whileFocus={{ scale: 1.05 }}
+          transition={{ duration: 0.2 }}
+        />
+        <motion.input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+          className="login-input"
+          whileFocus={{ scale: 1.05 }}
+          transition={{ duration: 0.2 }}
+        />
+        <motion.button 
+          type="submit" 
+          disabled={loading} 
+          className="login-button"
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.3 }}
+        >
+          {loading ? "Submitting..." : "Login"}
+        </motion.button>
+      </motion.form>
+      <Link to="/forgot-password" className="forgot-password-link">Forgot password?</Link>
+    </motion.div>
   );
 };
 
