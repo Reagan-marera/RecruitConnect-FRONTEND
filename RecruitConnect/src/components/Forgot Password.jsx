@@ -8,10 +8,10 @@ const ForgotPassword = () => {
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [step, setStep] = useState(1); // Step 1: Request OTP, Step 2: Verify OTP, Step 3: Reset password
+  const [step, setStep] = useState(1); 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [otpExpired, setOtpExpired] = useState(false); // Track if OTP expired
+  const [otpExpired, setOtpExpired] = useState(false);
   const navigate = useNavigate();
 
   const handleRequestOtp = async (e) => {
@@ -22,7 +22,7 @@ const ForgotPassword = () => {
 
     try {
       await axios.post("http://127.0.0.1:5000/request_reset_password", { email });
-      setStep(2); // Proceed to OTP input step
+      setStep(2); 
     } catch (err) {
       setError(err.response?.data?.error || "Failed to send OTP. Please try again.");
     } finally {
@@ -39,10 +39,10 @@ const ForgotPassword = () => {
       const response = await axios.post("http://127.0.0.1:5000/verify_otp", { email, otp });
 
       if (response.data.message === "OTP is valid") {
-        setStep(3); // Proceed to password reset step
+        setStep(3); 
       } else if (response.data.request_new_otp) {
         setOtpExpired(true);
-        setError(response.data.message); // Display the OTP expired message
+        setError(response.data.message);
       } else {
         setError(response.data.error || "Failed to verify OTP. Please try again.");
       }
@@ -95,7 +95,7 @@ const ForgotPassword = () => {
         } else if (userRole === 'user') {
           navigate("/seeker-login");
         } else {
-          navigate("/"); // Fallback
+          navigate("/"); 
         }
       } else {
         setError("Failed to reset password. Please try again.");

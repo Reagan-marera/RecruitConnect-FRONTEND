@@ -1,112 +1,74 @@
-.employer-login-container {
-  max-width: 600px;
+/* Container for both login forms */
+.login-container {
+  max-width: 400px;
   margin: 0 auto;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-  background-color: #050505; 
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.employer-login-header {
+/* Header style for login forms */
+.login-header {
   margin-bottom: 20px;
-  font-family: Arial, sans-serif;
   font-size: 24px;
-  color: #0ef106; 
-  margin-bottom: 1.5rem;
+  color: #333;
 }
 
-.employer-login-form {
+/* Form styling */
+.login-form {
   display: flex;
   flex-direction: column;
 }
 
-.employer-login-input {
+.login-input {
   margin-bottom: 15px;
   padding: 10px;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
   font-size: 16px;
-  font-family: Arial, sans-serif;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.employer-login-input:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-.employer-login-button {
+.login-button {
   padding: 10px 15px;
   font-size: 16px;
-  font-family: Arial, sans-serif;
-  color: #d7d5e2;
-  background-color: #5c5b555e;
+  color: #fff;
+  background-color: #4285f4; /* Google blue color */
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.4s;
+  transition: background-color 0.3s ease;
 }
 
-.employer-login-button:hover {
-  background-color: #542ce6;
+.login-button:hover {
+  background-color: #357ae8; /* Darker blue for hover effect */
 }
 
-/* Styles for the form switch text and button */
-.employer-switch-form {
-  margin-top: 20px;
-  font-family: Arial, sans-serif;
-  color: #d7d5e2;
-  display: flex;
-  align-items: center;
-  font-size: 16px;
+.error-message {
+  color: #d93025; /* Red for error messages */
+  margin-bottom: 15px;
 }
 
-.employer-switch-form button {
-  background: none;
-  border: none;
-  color: #0ef106;
-  cursor: pointer;
-  margin-left: 5px;
-  font-size: 16px;
-}
-
-.employer-switch-form button:hover {
+.forgot-password-link {
+  display: block;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #4285f4;
   text-decoration: underline;
 }
 
-.employer-error-message {
-  color: #e74c3c;
-  margin-bottom: 15px;
-  font-family: Arial, sans-serif;
+.forgot-password-link:hover {
+  text-decoration: none;
 }
 
-@media (max-width: 600px) {
-  .employer-login-container {
-    padding: 15px;
-  }
-
-  .employer-login-input, .employer-login-button {
-    color: #ffffff;
-    background-color: #333;
-    border-color: #444;
-  }
-
-  .employer-switch-form {
-    font-size: 14px;
-  }
-}
 
 .forgot-password-container {
-  max-width: 400px;
+  max-width: 500px;
   margin: 0 auto;
-  padding: 2rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background: #fff;
-}
-
-.forgot-password-header {
-  margin-bottom: 1rem;
-  text-align: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .forgot-password-form {
@@ -114,46 +76,60 @@
   flex-direction: column;
 }
 
-.forgot-password-input {
-  padding: 0.5rem;
-  margin-bottom: 1rem;
+.forgot-password-form h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.forgot-password-form .input {
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.forgot-password-button {
-  padding: 0.5rem;
-  background: #007bff;
+.forgot-password-form button {
+  padding: 10px 15px;
+  font-size: 16px;
   color: #fff;
+  background-color: #4285f4; /* Google blue color */
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.forgot-password-button:hover {
-  background: #0056b3;
+.forgot-password-form button:hover {
+  background-color: #357ae8; /* Darker blue for hover effect */
 }
 
-.forgot-password-message {
-  color: green;
-  text-align: center;
-  margin-bottom: 1rem;
+.forgot-password-form .error-message {
+  color: #d93025; /* Red for error messages */
+  margin-bottom: 15px;
 }
 
-.forgot-password-error {
-  color: red;
-  text-align: center;
-  margin-bottom: 1rem;
+.forgot-password-form p {
+  margin: 15px 0;
 }
 
-.forgot-password-link {
-  display: block;
-  margin-top: 1rem;
-  text-align: center;
-  color: #007bff;
-  text-decoration: none;
+.forgot-password-form button:disabled {
+  background-color: #c6c6c6; /* Gray color for disabled state */
+  cursor: not-allowed;
 }
 
-.forgot-password-link:hover {
+.forgot-password-form button + button {
+  margin-top: 10px;
+  padding: 5px;
+  font-size: 14px;
+  color: #4285f4;
+  background: transparent;
+  border: none;
+  cursor: pointer;
   text-decoration: underline;
+}
+
+.forgot-password-form button + button:hover {
+  text-decoration: none;
 }

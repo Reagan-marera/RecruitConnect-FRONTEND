@@ -17,7 +17,7 @@ const Seekerlogin = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token && location.pathname !== "/seeker-login") {
-      navigate("/"); // Redirect to home if token found and not on login page
+      navigate("/"); 
     }
   }, [navigate, location.pathname]);
 
@@ -34,7 +34,7 @@ const Seekerlogin = () => {
       const response = await axios.post("http://127.0.0.1:5000/login", formData);
       localStorage.setItem("token", response.data.access_token);
       alert("Seeker logged in successfully!");
-      navigate("/jobseeker"); // Redirect to home page
+      navigate("/jobseeker"); 
     } catch (error) {
       setError(error.response?.data?.error || "Failed to login. Please try again.");
     } finally {
@@ -43,10 +43,10 @@ const Seekerlogin = () => {
   };
 
   return (
-    <div className="employer-login-container">
-      <h2 className="employer-login-header">Seeker Login</h2>
-      {error && <p className="employer-error-message">{error}</p>}
-      <form onSubmit={handleSubmit} className="employer-login-form">
+    <div className="login-container">
+      <h2 className="login-header">Seeker Login</h2>
+      {error && <p className="error-message">{error}</p>}
+      <form onSubmit={handleSubmit} className="login-form">
         <input
           type="email"
           name="email"
@@ -54,7 +54,7 @@ const Seekerlogin = () => {
           value={formData.email}
           onChange={handleChange}
           required
-          className="employer-login-input"
+          className="login-input"
         />
         <input
           type="password"
@@ -63,9 +63,9 @@ const Seekerlogin = () => {
           value={formData.password}
           onChange={handleChange}
           required
-          className="employer-login-input"
+          className="login-input"
         />
-        <button type="submit" disabled={loading} className="employer-login-button">
+        <button type="submit" disabled={loading} className="login-button">
           {loading ? "Submitting..." : "Login"}
         </button>
       </form>
