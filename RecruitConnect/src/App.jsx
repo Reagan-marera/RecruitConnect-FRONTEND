@@ -12,6 +12,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import TermsOfService from './pages/terms';
 import PrivacyPolicy from './pages/Policy';
+import ForgotPassword from './components/Forgot Password';
 import './App.css';
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/policy" element={<PrivacyPolicy />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
       <Footer />
     </div>

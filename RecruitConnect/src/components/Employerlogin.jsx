@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import "../Loginform.css";
 
 const Employerlogin = () => {
@@ -69,6 +69,7 @@ const Employerlogin = () => {
           {loading ? "Submitting..." : "Login"}
         </button>
       </form>
+      <Link to="/forgot-password" className="forgot-password-link">Forgot password?</Link>
     </div>
   );
 };
