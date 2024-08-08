@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const CompanyProfile = ({ user_id, token, onProfileUpdate }) => {
+const CompanyProfile = ({ employer_id, token, onProfileUpdate }) => {
   const [companyProfile, setCompanyProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -9,8 +9,13 @@ const CompanyProfile = ({ user_id, token, onProfileUpdate }) => {
   useEffect(() => {
     const fetchCompanyProfile = async () => {
       try {
+        if (!employer_id || !token) {
+          throw new Error("user_id or token is missing");
+        }
+
+        console.log(`Fetching company profile for user_id: ${employer_id}`);
         const response = await axios.get(
-          `http://127.0.0.1:5000/company_profile/${user_id}`,
+          `http://127.0.0.1:5000/company_profile/${employer_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -19,6 +24,7 @@ const CompanyProfile = ({ user_id, token, onProfileUpdate }) => {
         );
         console.log("API Response:", response.data);
         setCompanyProfile(response.data);
+
         if (onProfileUpdate) {
           onProfileUpdate(response.data);
         }
@@ -32,10 +38,8 @@ const CompanyProfile = ({ user_id, token, onProfileUpdate }) => {
       }
     };
 
-    if (user_id && token) {
-      fetchCompanyProfile();
-    }
-  }, [user_id, token, onProfileUpdate]);
+    fetchCompanyProfile();
+  }, [employer_id, token, onProfileUpdate]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -49,3 +53,6 @@ const CompanyProfile = ({ user_id, token, onProfileUpdate }) => {
 };
 
 export default CompanyProfile;
+
+
+

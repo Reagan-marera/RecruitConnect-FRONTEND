@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import Sidebar from "./Sidebar"; 
-import Header from "./Header"; 
-import Overview from "./Overview"; 
-import CompanyProfile from "./CompanyProfile"; 
+import Sidebar from "./Sidebar";
+import Header from "./Header";
+import Overview from "./Overview";
+import CompanyProfile from "./CompanyProfile";
 import {
   Home,
   Briefcase,
@@ -15,7 +15,7 @@ import {
   Calendar,
   FileText,
   HelpCircle,
-} from "lucide-react"; 
+} from "lucide-react";
 
 const EmployerDashboard = () => {
   const [activeTab, setActiveTab] = useState("Overview");
@@ -23,29 +23,33 @@ const EmployerDashboard = () => {
   const [username, setUsername] = useState("");
   const [employerData, setEmployerData] = useState(null);
   const token = localStorage.getItem("token"); // token is stored in localStorage
-  const user_id = localStorage.getItem("user_id"); // Retrieve user_id from localStorage
+  // const user_id = localStorage.getItem("user_id"); // Retrieve user_id from localStorage
+  const employer_id =localStorage.getItem("employer_id")
 
   useEffect(() => {
     const fetchEmployerData = async () => {
       try {
+        if (!employer_id || !token) {
+          throw new Error("user_id or token is missing");
+        }
+
         const response = await axios.get(
-          `http://127.0.0.1:5000/employers/${user_id}`,
+          `http://127.0.0.1:5000/employers/${employer_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
+
         setEmployerData(response.data);
       } catch (error) {
         console.error("Error fetching employer data:", error);
       }
     };
 
-    if (user_id && token) {
-      fetchEmployerData();
-    }
-  }, [user_id, token]);
+    fetchEmployerData();
+  }, [employer_id, token]);
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
@@ -80,14 +84,14 @@ const EmployerDashboard = () => {
       case "Company Profile":
         return (
           <CompanyProfile
-            employer_id={user_id}
+            // user_id={user_id}
+            employer_id={employer_id}
             token={token}
             onProfileUpdate={handleProfileUpdate}
           />
         );
-      
-      default:
-        return <Overview stats={employerData?.stats} />;
+    //   default:
+    //     return <Overview stats={employerData?.stats} />;
     }
   };
 
@@ -128,5 +132,10 @@ const EmployerDashboard = () => {
 };
 
 export default EmployerDashboard;
+
+
+
+
+
 
 
