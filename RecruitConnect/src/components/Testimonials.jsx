@@ -10,7 +10,7 @@ const Testimonials = () => {
   const [showForm, setShowForm] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [error, setError] = useState("");
-  const [message, setMessage] = useState(""); // For feedback submission messages
+  const [message, setMessage] = useState("");
 
   const getAuthToken = () => localStorage.getItem("token");
 
@@ -25,15 +25,13 @@ const Testimonials = () => {
         });
 
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
 
         const data = await response.json();
-        console.log("Fetched testimonials:", data); // Debugging data
         setTestimonials(data);
       } catch (error) {
-        console.error("Error fetching testimonials:", error);
-        setError("Failed to fetch testimonials.");
+        setError(`Failed to fetch testimonials: ${error.message}`);
       }
     };
 
@@ -74,7 +72,7 @@ const Testimonials = () => {
   
       if (!response.ok) {
         const err = await response.json();
-        throw new Error(err.error || "Network response was not ok");
+        throw new Error(err.error || `Error ${response.status}: ${response.statusText}`);
       }
   
       const data = await response.json();
@@ -86,8 +84,7 @@ const Testimonials = () => {
       setError("");
       setMessage("Feedback submitted successfully!");
     } catch (error) {
-      console.error("Error posting feedback:", error.message);
-      setError(error.message);
+      setError(`Error posting feedback: ${error.message}`);
     }
   };
   
