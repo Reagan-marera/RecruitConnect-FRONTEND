@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./Register.css";
-
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -33,6 +34,7 @@ const Register = () => {
 
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match. Please try again.");
+      toast.error("Passwords do not match. Please try again.");
       setFormData(prevState => ({
         ...prevState,
         password: "",
@@ -44,7 +46,7 @@ const Register = () => {
 
     try {
       await axios.post("http://127.0.0.1:5000/register", formData);
-      alert("Registration successful! Redirecting to login page.");
+      toast.success("Registration successful! Please to login.");
       // Redirect based on user role
       if (formData.role === "user") {
         navigate("/seeker-login");
@@ -53,6 +55,7 @@ const Register = () => {
       }
     } catch (error) {
       setError(error.response?.data?.error || "Failed to register. Please try again.");
+      toast.error(error.response?.data?.error || "Failed to register. Please try again.");
     } finally {
       setLoading(false);
     }

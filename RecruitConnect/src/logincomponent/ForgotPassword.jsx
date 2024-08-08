@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./Loginform.css";
 
 const ForgotPassword = () => {
@@ -24,8 +26,10 @@ const ForgotPassword = () => {
     try {
       await axios.post("http://127.0.0.1:5000/request_reset_password", { email });
       setStep(2);
+      toast.success("OTP sent successfully. Please check your email.");
     } catch (err) {
       setError(err.response?.data?.error || "Failed to send OTP. Please try again.");
+      toast.error(err.response?.data?.error || "Failed to send OTP. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -44,11 +48,14 @@ const ForgotPassword = () => {
       } else if (response.data.request_new_otp) {
         setOtpExpired(true);
         setError(response.data.message);
+        toast.warning(response.data.message);
       } else {
         setError(response.data.error || "Failed to verify OTP. Please try again.");
+        toast.error(response.data.error || "Failed to verify OTP. Please try again.");
       }
     } catch (err) {
       setError(err.response?.data?.error || "Failed to verify OTP. Please try again.");
+      toast.error(err.response?.data?.error || "Failed to verify OTP. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -62,8 +69,10 @@ const ForgotPassword = () => {
       await axios.post("http://127.0.0.1:5000/request_new_otp", { email });
       setOtpExpired(false);
       setError('New OTP has been sent to your email.');
+      toast.success('New OTP has been sent to your email.');
     } catch (err) {
       setError(err.response?.data?.error || "Failed to request new OTP. Please try again.");
+      toast.error(err.response?.data?.error || "Failed to request new OTP. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -76,6 +85,7 @@ const ForgotPassword = () => {
 
     if (newPassword !== confirmPassword) {
       setError("Passwords do not match.");
+      toast.error("Passwords do not match.");
       setLoading(false);
       return;
     }
@@ -98,11 +108,14 @@ const ForgotPassword = () => {
         } else {
           navigate("/");
         }
+        toast.success('Password reset successfully.');
       } else {
         setError("Failed to reset password. Please try again.");
+        toast.error("Failed to reset password. Please try again.");
       }
     } catch (err) {
       setError(err.response?.data?.error || "Failed to reset password. Please try again.");
+      toast.error(err.response?.data?.error || "Failed to reset password. Please try again.");
     } finally {
       setLoading(false);
     }
