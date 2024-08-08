@@ -20,7 +20,7 @@ const Logout = () => {
       sessionStorage.removeItem('employerAuthToken');
 
       // Send logout request to the server
-      await fetch('/api/logout', { method: 'POST' });
+      await fetch('/logout', { method: 'POST' });
 
       // Call logout function from AuthContext
       logout();
