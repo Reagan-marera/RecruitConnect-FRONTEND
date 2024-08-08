@@ -1,207 +1,118 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './JobPostingForm.css';
 
 const JobPostingForm = () => {
-  const [formData, setFormData] = useState({
-    jobTitle: '',
-    company: '',
-    location: '',
-    description: '',
-    requirements: '',
-    salary: '',
-    jobType: '' 
-  });
-  
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
+    const [jobTitle, setJobTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [location, setLocation] = useState('');
+    const [companyEmail, setCompanyEmail] = useState('');
+    const [employerId, setEmployerId] = useState('');
+    const [error, setError] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(null);
+    const navigate = useNavigate();
 
-  const navigate = useNavigate();
-  const { jobId } = useParams(); 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-  useEffect(() => {
-    if (jobId) {
-      const fetchJob = async () => {
+        const token = localStorage.getItem('token');
+
         try {
-          const token = localStorage.getItem('token');
-          const response = await axios.get(`http://127.0.0.1:5000/api/jobs/${jobId}`, {
-            headers: {
-              'Authorization': `Bearer ${token}`
+            const response = await axios.post(
+                'http://127.0.0.1:5000/jobs',
+                {
+                    title: jobTitle,
+                    description: description,
+                    location: location,
+                    company_email: companyEmail,
+                    employer_id: employerId,
+                },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+
+            setSuccessMessage('Job posted successfully!');
+            setError(null);
+            navigate('/jobs');
+
+        } catch (error) {
+            console.error('Error posting job:', error);
+            if (error.response) {
+                console.error('Error response status:', error.response.status);
+                console.error('Error response data:', error.response.data);
+                setError(error.response.data.message || 'Failed to post job. Please try again.');
+            } else if (error.request) {
+                console.error('Error request:', error.request);
+                setError('No response from the server. Please try again.');
+            } else {
+                console.error('Error message:', error.message);
+                setError('An unexpected error occurred. Please try again.');
             }
-          });
-          setFormData(response.data);
-        } catch (err) {
-          setError('Failed to fetch job details');
+            setSuccessMessage(null);
         }
-      };
-      fetchJob();
-    }
-  }, [jobId]);
+    };
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+    return (
+        <form className="job-posting-form" onSubmit={handleSubmit}>
+            <label>Job Title</label>
+            <input 
+                className="job-posting-form__input"
+                type="text" 
+                value={jobTitle} 
+                onChange={(e) => setJobTitle(e.target.value)} 
+                required 
+            />
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-    setSuccess(false);
+            <label>Description</label>
+            <textarea 
+                className="job-posting-form__textarea"
+                value={description} 
+                onChange={(e) => setDescription(e.target.value)} 
+                required 
+            />
 
-    try {
-      const token = localStorage.getItem('token');
-      const url = jobId 
-        ? `http://127.0.0.1:5000/api/jobs/`
-        : 'http://127.0.0.1:5000/api/jobs';
-      const method = jobId ? 'put' : 'post';
+            <label>Location</label>
+            <input 
+                className="job-posting-form__input"
+                type="text" 
+                value={location} 
+                onChange={(e) => setLocation(e.target.value)} 
+                required 
+            />
 
-      await axios({
-        method,
-        url,
-        data: formData,
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+            <label>Company Email</label>
+            <input 
+                className="job-posting-form__input"
+                type="email" 
+                value={companyEmail} 
+                onChange={(e) => setCompanyEmail(e.target.value)} 
+                required 
+            />
 
-      setLoading(false);
-      setSuccess(true);
+            <label>Employer ID</label>
+            <input 
+                className="job-posting-form__input"
+                value={employerId} 
+                onChange={(e) => setEmployerId(e.target.value)} 
+                required 
+            />
 
-      if (!jobId) {
-        setFormData({
-          jobTitle: '',
-          company: '',
-          location: '',
-          description: '',
-          requirements: '',
-          salary: '',
-          jobType: '' 
-        });
-      }
+            <button 
+                className="job-posting-form__button"
+                type="submit"
+            >
+                Post Job
+            </button>
 
-      navigate('/jobs'); // Adjust the route as per your application's routing
-    } catch (err) {
-      setLoading(false);
-      setError(err.response?.data?.message || 'An error occurred');
-    }
-  };
-
-  return (
-    <div className="job-posting-form">
-      <h2>{jobId ? 'Edit Job' : 'Post a New Job'}</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="jobTitle">Job Title:</label>
-          <input 
-            type="text" 
-            id="jobTitle" 
-            name="jobTitle" 
-            value={formData.jobTitle} 
-            onChange={handleChange} 
-            required 
-          />
-        </div>
-        <div>
-          <label htmlFor="company">Company:</label>
-          <input 
-            type="text" 
-            id="company" 
-            name="company" 
-            value={formData.company} 
-            onChange={handleChange} 
-            required 
-          />
-        </div>
-        <div>
-          <label htmlFor="location">Location:</label>
-          <input 
-            type="text" 
-            id="location" 
-            name="location" 
-            value={formData.location} 
-            onChange={handleChange} 
-            required 
-          />
-        </div>
-        <div>
-          <label htmlFor="description">Job Description:</label>
-          <textarea 
-            id="description" 
-            name="description" 
-            value={formData.description} 
-            onChange={handleChange} 
-            required 
-          />
-        </div>
-        <div>
-          <label htmlFor="requirements">Requirements:</label>
-          <textarea 
-            id="requirements" 
-            name="requirements" 
-            value={formData.requirements} 
-            onChange={handleChange} 
-            required 
-          />
-        </div>
-        <div>
-          <label htmlFor="salary">Salary:</label>
-          <input 
-            type="text" 
-            id="salary" 
-            name="salary" 
-            value={formData.salary} 
-            onChange={handleChange} 
-          />
-        </div>
-        <div className="job-type">
-          <label>Job Type:</label>
-          <div className="job-type-options">
-            <label>
-              <input 
-                type="radio" 
-                name="jobType" 
-                value="contract" 
-                checked={formData.jobType === 'contract'} 
-                onChange={handleChange} 
-              />
-              Contract
-            </label>
-            <label>
-              <input 
-                type="radio" 
-                name="jobType" 
-                value="part-time" 
-                checked={formData.jobType === 'part-time'} 
-                onChange={handleChange} 
-              />
-              Part-Time
-            </label>
-            <label>
-              <input 
-                type="radio" 
-                name="jobType" 
-                value="full-time" 
-                checked={formData.jobType === 'full-time'} 
-                onChange={handleChange} 
-              />
-              Full-Time
-            </label>
-          </div>
-        </div>
-        <button type="submit" disabled={loading}>
-          {jobId ? 'Update Job' : 'Post Job'}
-        </button>
-        {loading && <p>Processing...</p>}
-        {error && <p className="error">{error}</p>}
-        {success && <p className="success">{jobId ? 'Job updated successfully!' : 'Job posted successfully!'}</p>}
-      </form>
-    </div>
-  );
+            {error && <p className="error-message">{error}</p>}
+            {successMessage && <p className="success-message">{successMessage}</p>}
+        </form>
+    );
 };
 
 export default JobPostingForm;
