@@ -4,8 +4,7 @@ import NavBar from './components/NavBar';
 import Landing from './components/Landing';
 import Joblist from './components/Joblist';
 import Footer from './components/Footer';
-import Logout from './Logout';
-import EmployerForm from './components/EmployerForm';
+import Logout from './components/Logout';
 import { AuthProvider, useAuth } from './AuthContext';
 import EmployerLogin from './logincomponent/Employerlogin';
 import SeekerLogin from './logincomponent/Seekerlogin';
@@ -15,6 +14,10 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import TermsOfService from './pages/terms';
 import PrivacyPolicy from './pages/Policy';
+import JobPostingForm from './components/JobPostingForm';
+import JobPostingDetails from './components/JobPostingDetails';
+import JobPostingEdit from './components/JobPostingEditForm';
+import JobPostingList from './components/JobPostingList';
 import ForgotPassword from './logincomponent/ForgotPassword';
 import './App.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -25,6 +28,7 @@ const App = () => {
    const { isAuthenticated } = useAuth();
   
   return (
+    <>
     <AuthProvider>
     <div>
       <NavBar />
@@ -42,7 +46,12 @@ const App = () => {
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/policy" element={<PrivacyPolicy />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/jobposting" element={<JobPostingForm />} />
+        <Route path="/jobposting/:id" element={<JobPostingDetails />} />
+        <Route path="/jobposting/edit/:id" element={<JobPostingEdit />} />
+        <Route path="/jobposting/list" element={<JobPostingList />} /> 
         {isAuthenticated && <Route path="/logout" element={<Logout />} />}
+
       </Routes>
       <Footer />
       <ToastContainer />
