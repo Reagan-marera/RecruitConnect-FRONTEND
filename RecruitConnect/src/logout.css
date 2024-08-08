@@ -1,0 +1,32 @@
+.logout-icon {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    
+
+  }
+  
+  .logout-icon:hover {
+    opacity: 0.8;
+  }
+  /* src/components/Logout.css */
+.logout-button {
+  display: flex;
+  align-items: center;
+  border: none;
+  background: transparent;
+  color: #ff5e5e; /* You can choose any color you like */
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logout-button svg {
+  margin-right: 8px;
+}
+
+.logout-button:hover {
+  color: #ff3d3d; /* Hover color */
+}
+
+  

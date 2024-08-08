@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './JobPostingForm.css';
+import '../JobPostingForm.css';
 
 const JobPostingForm = () => {
     const [jobTitle, setJobTitle] = useState('');
