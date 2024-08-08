@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const CompanyProfile = ({ employer_id, token, onProfileUpdate }) => {
+const CompanyProfile = ({ user_id, token, onProfileUpdate }) => {
   const [companyProfile, setCompanyProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,7 +10,7 @@ const CompanyProfile = ({ employer_id, token, onProfileUpdate }) => {
     const fetchCompanyProfile = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:5000/company_profile/${employer_id}`,
+          `http://127.0.0.1:5000/company_profile/${user_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -32,8 +32,10 @@ const CompanyProfile = ({ employer_id, token, onProfileUpdate }) => {
       }
     };
 
-    fetchCompanyProfile();
-  }, [employer_id, token, onProfileUpdate]);
+    if (user_id && token) {
+      fetchCompanyProfile();
+    }
+  }, [user_id, token, onProfileUpdate]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
