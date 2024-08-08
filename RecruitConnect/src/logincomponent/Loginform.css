@@ -1,0 +1,135 @@
+/* Container for both login forms */
+.login-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Header style for login forms */
+.login-header {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Form styling */
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-input {
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.login-button {
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #4285f4; /* Google blue color */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #357ae8; /* Darker blue for hover effect */
+}
+
+.error-message {
+  color: #d93025; /* Red for error messages */
+  margin-bottom: 15px;
+}
+
+.forgot-password-link {
+  display: block;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #4285f4;
+  text-decoration: underline;
+}
+
+.forgot-password-link:hover {
+  text-decoration: none;
+}
+
+
+.forgot-password-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.forgot-password-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.forgot-password-form h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.forgot-password-form .input {
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.forgot-password-form button {
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #4285f4; /* Google blue color */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.forgot-password-form button:hover {
+  background-color: #357ae8; /* Darker blue for hover effect */
+}
+
+.forgot-password-form .error-message {
+  color: #d93025; /* Red for error messages */
+  margin-bottom: 15px;
+}
+
+.forgot-password-form p {
+  margin: 15px 0;
+}
+
+.forgot-password-form button:disabled {
+  background-color: #c6c6c6; /* Gray color for disabled state */
+  cursor: not-allowed;
+}
+
+.forgot-password-form button + button {
+  margin-top: 10px;
+  padding: 5px;
+  font-size: 14px;
+  color: #4285f4;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.forgot-password-form button + button:hover {
+  text-decoration: none;
+}

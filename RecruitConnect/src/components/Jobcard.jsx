@@ -22,7 +22,6 @@ const JobCard = ({ job, onClick, detailed }) => {
   };
 
   const handleApply = () => {
-    // Redirect to apply job route
     window.location.href = `/apply-job/${job.id}`;
   };
 
