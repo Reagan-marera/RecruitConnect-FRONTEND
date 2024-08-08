@@ -4,6 +4,9 @@ import NavBar from './components/NavBar';
 import Landing from './components/Landing';
 import Joblist from './components/Joblist';
 import Footer from './components/Footer';
+import Logout from './Logout';
+import EmployerForm from './components/EmployerForm';
+import { AuthProvider, useAuth } from './AuthContext';
 import EmployerLogin from './logincomponent/Employerlogin';
 import SeekerLogin from './logincomponent/Seekerlogin';
 import Register from './logincomponent/Register';
@@ -17,8 +20,12 @@ import './App.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 const App = () => {
+   const { isAuthenticated } = useAuth();
+  
   return (
+    <AuthProvider>
     <div>
       <NavBar />
       <Routes>
@@ -35,10 +42,13 @@ const App = () => {
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/policy" element={<PrivacyPolicy />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        {isAuthenticated && <Route path="/logout" element={<Logout />} />}
       </Routes>
       <Footer />
       <ToastContainer />
     </div>
+    </AuthProvider>
+  </>
   );
 };
 
