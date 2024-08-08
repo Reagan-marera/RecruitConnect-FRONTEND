@@ -18,7 +18,7 @@ const JobPostingForm = () => {
   const [success, setSuccess] = useState(false);
 
   const navigate = useNavigate();
-  const { jobId } = useParams(); // Assuming you might want to edit a job post
+  const { jobId } = useParams(); 
 
   useEffect(() => {
     if (jobId) {
