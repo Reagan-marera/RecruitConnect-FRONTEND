@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import JobPostingEdit from './JobPostingEditForm';
+import './JobPostingForm.css';
 
 const JobPostingForm = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +10,8 @@ const JobPostingForm = () => {
     location: '',
     description: '',
     requirements: '',
-    salary: ''
+    salary: '',
+    jobType: '' 
   });
   
   const [loading, setLoading] = useState(false);
@@ -22,11 +23,10 @@ const JobPostingForm = () => {
 
   useEffect(() => {
     if (jobId) {
-      // Fetch job data if jobId is present (for editing)
       const fetchJob = async () => {
         try {
           const token = localStorage.getItem('token');
-          const response = await axios.get(`http://localhost:8000/api/jobs/${jobId}`, {
+          const response = await axios.get(`http://127.0.0.1:5000/api/jobs/${jobId}`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }
@@ -60,7 +60,7 @@ const JobPostingForm = () => {
         : 'http://127.0.0.1:5000/api/jobs';
       const method = jobId ? 'put' : 'post';
 
-      const response = await axios({
+      await axios({
         method,
         url,
         data: formData,
@@ -79,11 +79,11 @@ const JobPostingForm = () => {
           location: '',
           description: '',
           requirements: '',
-          salary: ''
+          salary: '',
+          jobType: '' // Reset to default
         });
       }
 
-      // Navigate to job list or job details page after success
       navigate('/jobs'); // Adjust the route as per your application's routing
     } catch (err) {
       setLoading(false);
@@ -97,29 +97,105 @@ const JobPostingForm = () => {
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="jobTitle">Job Title:</label>
-          <input type="text" id="jobTitle" name="jobTitle" value={formData.jobTitle} onChange={handleChange} required />
+          <input 
+            type="text" 
+            id="jobTitle" 
+            name="jobTitle" 
+            value={formData.jobTitle} 
+            onChange={handleChange} 
+            required 
+          />
         </div>
         <div>
           <label htmlFor="company">Company:</label>
-          <input type="text" id="company" name="company" value={formData.company} onChange={handleChange} required />
+          <input 
+            type="text" 
+            id="company" 
+            name="company" 
+            value={formData.company} 
+            onChange={handleChange} 
+            required 
+          />
         </div>
         <div>
           <label htmlFor="location">Location:</label>
-          <input type="text" id="location" name="location" value={formData.location} onChange={handleChange} required />
+          <input 
+            type="text" 
+            id="location" 
+            name="location" 
+            value={formData.location} 
+            onChange={handleChange} 
+            required 
+          />
         </div>
         <div>
           <label htmlFor="description">Job Description:</label>
-          <textarea id="description" name="description" value={formData.description} onChange={handleChange} required />
+          <textarea 
+            id="description" 
+            name="description" 
+            value={formData.description} 
+            onChange={handleChange} 
+            required 
+          />
         </div>
         <div>
           <label htmlFor="requirements">Requirements:</label>
-          <textarea id="requirements" name="requirements" value={formData.requirements} onChange={handleChange} required />
+          <textarea 
+            id="requirements" 
+            name="requirements" 
+            value={formData.requirements} 
+            onChange={handleChange} 
+            required 
+          />
         </div>
         <div>
           <label htmlFor="salary">Salary:</label>
-          <input type="text" id="salary" name="salary" value={formData.salary} onChange={handleChange} />
+          <input 
+            type="text" 
+            id="salary" 
+            name="salary" 
+            value={formData.salary} 
+            onChange={handleChange} 
+          />
         </div>
-        <button type="submit" disabled={loading}>{jobId ? 'Update Job' : 'Post Job'}</button>
+        <div className="job-type">
+          <label>Job Type:</label>
+          <div className="job-type-options">
+            <label>
+              <input 
+                type="radio" 
+                name="jobType" 
+                value="contract" 
+                checked={formData.jobType === 'contract'} 
+                onChange={handleChange} 
+              />
+              Contract
+            </label>
+            <label>
+              <input 
+                type="radio" 
+                name="jobType" 
+                value="part-time" 
+                checked={formData.jobType === 'part-time'} 
+                onChange={handleChange} 
+              />
+              Part-Time
+            </label>
+            <label>
+              <input 
+                type="radio" 
+                name="jobType" 
+                value="full-time" 
+                checked={formData.jobType === 'full-time'} 
+                onChange={handleChange} 
+              />
+              Full-Time
+            </label>
+          </div>
+        </div>
+        <button type="submit" disabled={loading}>
+          {jobId ? 'Update Job' : 'Post Job'}
+        </button>
         {loading && <p>Processing...</p>}
         {error && <p className="error">{error}</p>}
         {success && <p className="success">{jobId ? 'Job updated successfully!' : 'Job posted successfully!'}</p>}

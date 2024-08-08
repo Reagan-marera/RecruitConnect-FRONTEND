@@ -14,6 +14,9 @@ import TermsOfService from './pages/terms';
 import PrivacyPolicy from './pages/Policy';
 import ForgotPassword from './components/Forgot Password';
 import JobPostingForm from './components/JobPostingForm';
+import JobPostingDetails from './components/JobPostingDetails';
+import JobPostingEdit from './components/JobPostingEditForm';
+import JobPostingList from './components/JobPostingList';
 import './App.css';
 
 const App = () => {
@@ -34,7 +37,10 @@ const App = () => {
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/policy" element={<PrivacyPolicy />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/jobposting " element={<JobPostingForm />} />
+        <Route path="/jobposting" element={<JobPostingForm />} />
+        <Route path="/jobposting/:id" element={<JobPostingDetails />} />
+        <Route path="/jobposting/edit/:id" element={<JobPostingEdit />} />
+        <Route path="/jobposting/list" element={<JobPostingList />} /> 
       </Routes>
       <Footer />
     </div>

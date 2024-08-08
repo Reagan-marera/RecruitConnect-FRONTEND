@@ -1,0 +1,141 @@
+/* General Form Styling */
+.job-posting-form {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header Styling */
+  .job-posting-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  /* Form Container */
+  .job-posting-form form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Form Input Fields */
+  .job-posting-form input[type="text"],
+  .job-posting-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #333;
+    box-sizing: border-box;
+  }
+  
+  .job-posting-form textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  
+  /* Job Type Toggle Switch */
+  .job-type {
+    margin-top: 20px;
+  }
+  
+  .job-type label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .job-type-options {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .job-type-option {
+    position: relative;
+    padding-left: 40px;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .job-type-option input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .job-type-option .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: background-color 0.4s;
+    border-radius: 20px;
+  }
+  
+  .job-type-option .slider:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    background-color: white;
+    transition: transform 0.4s;
+    left: 4px;
+    bottom: 4px;
+  }
+  
+  .job-type-option input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  .job-type-option input:checked + .slider:before {
+    transform: translateX(20px);
+  }
+  
+  /* Buttons */
+  button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  button:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+  
+  /* Messages */
+  .error {
+    color: #d9534f;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .success {
+    color: #5cb85c;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
