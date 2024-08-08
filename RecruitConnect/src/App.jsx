@@ -14,6 +14,8 @@ import TermsOfService from './pages/terms';
 import PrivacyPolicy from './pages/Policy';
 import ForgotPassword from './logincomponent/ForgotPassword';
 import './App.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
@@ -35,6 +37,7 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
       <Footer />
+      <ToastContainer />
     </div>
   );
 };
