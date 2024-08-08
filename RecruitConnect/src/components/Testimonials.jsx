@@ -48,12 +48,12 @@ const Testimonials = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (rating < 1 || rating > 5 || !content) {
       setError("Please provide valid inputs.");
       return;
     }
-
+  
     try {
       const token = getAuthToken();
       const response = await fetch("http://127.0.0.1:5000/feedback", {
@@ -63,18 +63,20 @@ const Testimonials = () => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
+          employer_id: 1, // Replace with actual employer ID if needed
+          job_id: 2, // Optional: replace with actual job ID if needed
           rating: rating,
           content: content,
         }),
       });
-
+  
       if (!response.ok) {
         const err = await response.json();
         throw new Error(err.error || `Error ${response.status}: ${response.statusText}`);
       }
-
+  
       const data = await response.json();
-      setTestimonials((prev) => [...prev, data]);
+      setTestimonials((prev) => [...prev, data.feedback]);
       setRating(0);
       setContent("");
       setFormSubmitted(true);
@@ -85,7 +87,7 @@ const Testimonials = () => {
       setError(`Error posting feedback: ${error.message}`);
     }
   };
-
+  
   const handleToggleForm = () => {
     if (formSubmitted) {
       setFormSubmitted(false);
@@ -119,7 +121,7 @@ const Testimonials = () => {
                 {testimonials.map((testimonial, index) => {
                   const validRating = Number.isInteger(testimonial.rating) && testimonial.rating >= 1 && testimonial.rating <= 5
                     ? testimonial.rating
-                    : 0; 
+                    : 0;
 
                   return (
                     <div key={index} className="card">
@@ -178,7 +180,7 @@ const Testimonials = () => {
                 type="number"
                 placeholder="Rating (1-5)"
                 value={rating}
-                onChange={(e) => setRating(Number(e.target.value))}
+                onChange={(e) => setRating(parseInt(e.target.value))}
                 min="1"
                 max="5"
                 required

@@ -4,16 +4,18 @@ import NavBar from './components/NavBar';
 import Landing from './components/Landing';
 import Joblist from './components/Joblist';
 import Footer from './components/Footer';
-import EmployerLogin from './components/Employerlogin';
-import SeekerLogin from './components/Seekerlogin';
-import Register from './components/Register';
+import EmployerLogin from './logincomponent/Employerlogin';
+import SeekerLogin from './logincomponent/Seekerlogin';
+import Register from './logincomponent/Register';
 import JobSeeker from './seekercomponents/JobSeeker';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import TermsOfService from './pages/terms';
 import PrivacyPolicy from './pages/Policy';
-import ForgotPassword from './components/Forgot Password';
+import ForgotPassword from './logincomponent/ForgotPassword';
 import './App.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
@@ -35,6 +37,7 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
       <Footer />
+      <ToastContainer />
     </div>
   );
 };
