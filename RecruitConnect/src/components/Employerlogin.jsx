@@ -34,7 +34,8 @@ const Employerlogin = () => {
       const response = await axios.post("http://127.0.0.1:5000/login", formData);
       localStorage.setItem("token", response.data.access_token);
       alert("Employer logged in successfully!");
-      navigate("/"); 
+      navigate("/");
+      window.location.reload(); 
     } catch (error) {
       setError(error.response?.data?.error || "Failed to login. Please try again.");
     } finally {
