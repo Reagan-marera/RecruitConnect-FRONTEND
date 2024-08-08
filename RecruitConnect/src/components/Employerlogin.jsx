@@ -15,7 +15,7 @@ const Employerlogin = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token" );
     if (token && location.pathname !== "/employer-login") {
       navigate("/"); // Redirect to home if token found and not on login page
     }
@@ -33,8 +33,10 @@ const Employerlogin = () => {
     try {
       const response = await axios.post("http://127.0.0.1:5000/login", formData);
       localStorage.setItem("token", response.data.access_token);
+      localStorage.setItem("username",response.data.username) //store the username in the localStorage
+    //  localStorage.setItem("employer_id", response.data.employer_id);//stores the employer_id
       alert("Employer logged in successfully!");
-      navigate("/"); // Redirect to home page
+      navigate("/employer-dashboard"); // Redirect to EmployerDashboard
     } catch (error) {
       setError(error.response?.data?.error || "Failed to login. Please try again.");
     } finally {
@@ -74,3 +76,14 @@ const Employerlogin = () => {
 };
 
 export default Employerlogin;
+
+
+
+
+
+
+
+
+
+
+
