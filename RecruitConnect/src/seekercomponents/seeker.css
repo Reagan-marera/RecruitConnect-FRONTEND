@@ -1,0 +1,80 @@
+:root {
+  --primary-bg-color: #0323696b;
+  --secondary-bg-color: #f4f4f4;
+  --button-bg-color: #575757;
+  --button-hover-bg-color: grey;
+  --button-color: #fff;
+  --container-padding: 40px 20px;
+  --nav-padding: 24px;
+  --content-padding: 20px;
+  --border-radius: 9px;
+  --button-border-radius: 20px;
+  --box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  --transition-duration: 0.3s;
+}
+
+.jobseeker-container {
+  display: flex;
+  padding: var(--container-padding);
+}
+
+.jobseeker-navbar {
+  background-color: var(--primary-bg-color);
+  padding: var(--nav-padding);
+  border-radius: var(--border-radius);
+  width: 200px;
+  margin-right: 20px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 40px;
+}
+
+.jobseeker-content {
+  flex-grow: 1;
+  padding: var(--content-padding);
+  background-color: var(--secondary-bg-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.jobseeker-nav-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.jobseeker-nav-item {
+  margin-bottom: 20px;
+}
+
+.jobseeker-nav-button {
+  display: block;
+  color: var(--button-color);
+  text-decoration: none;
+  padding: 8px 24px;
+  background-color: var(--button-bg-color);
+  border-radius: var(--button-border-radius);
+  transition: background-color var(--transition-duration), transform var(--transition-duration);
+}
+
+.jobseeker-nav-button:hover {
+  background-color: var(--button-hover-bg-color);
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .jobseeker-container {
+    flex-direction: column;
+  }
+
+  .jobseeker-navbar {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .jobseeker-nav-button {
+    padding: 6px 12px;
+  }
+}
