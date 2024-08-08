@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import "../Loginform.css";
+import "./Loginform.css";
 
 const Employerlogin = () => {
   const [formData, setFormData] = useState({

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import "../Loginform.css";
+import "./Loginform.css";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
