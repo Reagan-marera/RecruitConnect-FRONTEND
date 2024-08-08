@@ -11,7 +11,7 @@ const Overview = () => {
     datasets: [
       {
         label: 'Applications',
-        data: [65, 59, 80, 81, 56, 55, 40,10,20,60,40,30],
+        data: [65, 59, 80, 14, 56, 55, 40,10,20,60,40,30],
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,

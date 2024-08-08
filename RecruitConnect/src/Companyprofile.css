@@ -61,3 +61,38 @@
 .profile-form .submit-button:hover {
   background-color: #0056b3;
 }
+
+.company-profile {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.company-profile h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.company-profile .company-logo {
+  max-width: 150px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.company-profile .profile-details p {
+  margin: 10px 0;
+  font-size: 1.1em;
+}
+
+.company-profile a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.company-profile a:hover {
+  text-decoration: underline;
+}
