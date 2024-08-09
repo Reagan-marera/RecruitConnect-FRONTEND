@@ -1,0 +1,139 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+/* Custom styles for the Employer Dashboard */
+/* 
+.dashboard-container {
+  @apply flex h-screen bg-gray-100;
+}
+
+.sidebar-container {
+  @apply bg-white w-64 min-h-screen overflow-y-auto fixed lg:static lg:translate-x-0 shadow-lg z-20;
+}
+
+.main-content {
+  @apply flex-1 flex flex-col overflow-hidden;
+}
+
+.header-container {
+  @apply bg-white shadow-md px-6 py-4 sticky top-0 z-10;
+}
+
+.header-title {
+  @apply text-xl font-bold text-gray-800;
+}
+
+.header-subtitle {
+  @apply text-sm text-gray-500;
+}
+
+.notification {
+  @apply relative;
+}
+
+.notification-icon {
+  @apply text-gray-500 cursor-pointer hover:text-indigo-600 transition-colors;
+}
+
+.notification-badge {
+  @apply absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full;
+}
+
+.content-container {
+  @apply flex-1 overflow-y-auto bg-gray-50;
+}
+
+.content-wrapper {
+  @apply container mx-auto px-4 py-8;
+}
+
+.content-heading {
+  @apply text-3xl font-bold mb-6 text-gray-800;
+}
+
+.stat-card-container {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6;
+}
+
+.stat-card {
+  @apply bg-white shadow-md rounded-lg p-4;
+}
+
+.stat-icon {
+  @apply text-gray-600;
+}
+
+.stat-label {
+  @apply text-sm font-medium text-gray-500;
+}
+
+.stat-value {
+  @apply text-2xl font-bold text-gray-800;
+} */
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+.dashboard-container {
+  @apply flex h-screen bg-gray-100;
+}
+.sidebar-container {
+  @apply bg-white w-64 min-h-screen overflow-y-auto fixed lg:static lg:translate-x-0 shadow-lg z-20;
+}
+/* Additional styles for sidebar */
+.sidebar-item {
+  @apply flex items-center space-x-3 py-3 px-4 w-full rounded-lg transition-colors;
+}
+/* Style for active tab */
+.sidebar-item-active {
+  @apply bg-indigo-600 text-white;
+}
+.main-content {
+  @apply flex-1 flex flex-col overflow-hidden;
+}
+.header-container {
+  @apply bg-white shadow-md px-6 py-4 sticky top-0 z-10;
+}
+.header-title {
+  @apply text-xl font-bold text-gray-800;
+}
+.header-subtitle {
+  @apply text-sm text-gray-500;
+}
+.notification {
+  @apply relative;
+}
+.notification-icon {
+  @apply text-gray-500 cursor-pointer hover:text-indigo-600 transition-colors;
+}
+.notification-badge {
+  @apply absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full;
+}
+.content-container {
+  @apply flex-1 overflow-y-auto bg-gray-50;
+}
+.content-wrapper {
+  @apply container mx-auto px-4 py-8;
+}
+.content-heading {
+  @apply text-3xl font-bold mb-6 text-gray-800;
+}
+.stat-card-container {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6;
+}
+.stat-card {
+  @apply bg-white shadow-md rounded-lg p-4;
+}
+.stat-icon {
+  @apply text-gray-600;
+}
+.stat-label {
+  @apply text-sm font-medium text-gray-500;
+}
+.stat-value {
+  @apply text-2xl font-bold text-gray-800;
+}

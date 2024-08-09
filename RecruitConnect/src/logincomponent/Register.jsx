@@ -12,7 +12,13 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "user" 
+    role: "user", // Default role
+    company_name: "",
+    contact_email: "",
+    company_culture: "",
+    job_openings: "",
+    address: "",
+    phone_number: ""
   });
 
   const [error, setError] = useState("");
@@ -21,9 +27,9 @@ const Register = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -33,12 +39,11 @@ const Register = () => {
     setError("");
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match. Please try again.");
       toast.error("Passwords do not match. Please try again.");
       setFormData(prevState => ({
         ...prevState,
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
       }));
       setLoading(false);
       return;
@@ -148,6 +153,62 @@ const Register = () => {
         >
           <option value="user">Job Seeker</option>
           <option value="employer">Employer</option>
+
+        </select>
+        {formData.role === "employer" && (
+          <>
+            <input
+              type="text"
+              name="company_name"
+              placeholder="Company Name"
+              value={formData.company_name}
+              onChange={handleChange}
+              className="register-input"
+            />
+            <input
+              type="email"
+              name="contact_email"
+              placeholder="Contact Email"
+              value={formData.contact_email}
+              onChange={handleChange}
+              className="register-input"
+            />
+            <input
+              type="text"
+              name="company_culture"
+              placeholder="Company Culture"
+              value={formData.company_culture}
+              onChange={handleChange}
+              className="register-input"
+            />
+            <input
+              type="text"
+              name="job_openings"
+              placeholder="Job Openings"
+              value={formData.job_openings}
+              onChange={handleChange}
+              className="register-input"
+            />
+            <input
+              type="text"
+              name="address"
+              placeholder="Address"
+              value={formData.address}
+              onChange={handleChange}
+              className="register-input"
+            />
+            <input
+              type="text"
+              name="phone_number"
+              placeholder="Phone Number"
+              value={formData.phone_number}
+              onChange={handleChange}
+              className="register-input"
+            />
+          </>
+        )}
+        <button type="submit" disabled={loading} className="register-button">
+
         </motion.select>
         <motion.button
           type="submit"
