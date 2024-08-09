@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, useLocation, Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Loginform.css";
 
-const Employerlogin = () => {
+const EmployerLogin = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -20,7 +17,7 @@ const Employerlogin = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token && location.pathname !== "/employer-login") {
-      navigate("/"); 
+      navigate("/"); // Redirect to home if token found and not on login page
     }
   }, [navigate, location.pathname]);
 
@@ -34,84 +31,58 @@ const Employerlogin = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://127.0.0.1:5000/login", formData);
+      const response = await axios.post(
+        "http://127.0.0.1:5000/login",
+        formData
+      );
       localStorage.setItem("token", response.data.access_token);
-      toast.success("Employer logged in successfully!");
-      navigate("/"); 
+      localStorage.setItem("username", response.data.username); // store the username in localStorage
+      localStorage.setItem("user_id", response.data.user_id); // store the user_id
+      localStorage.setItem("employer_id", response.data.employer_id); // store the employer_id
+      alert("Employer logged in successfully!");
+      navigate("/employer-dashboard"); // Redirect to EmployerDashboard
     } catch (error) {
-      setError(error.response?.data?.error || "Failed to login. Please try again.");
-      toast.error(error.response?.data?.error || "Failed to login. Please try again.");
+      setError(
+        error.response?.data?.error || "Failed to login. Please try again."
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <motion.div
-      className="login-container"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <motion.h2
-        className="login-header"
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
-        Employer Login
-      </motion.h2>
-      {error && <motion.p className="error-message"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >{error}</motion.p>}
-      <motion.form
-        onSubmit={handleSubmit}
-        className="login-form"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
-      >
-        <motion.input
+    <div className="employer-login-container">
+      <h2 className="employer-login-header">Employer Login</h2>
+      {error && <p className="employer-error-message">{error}</p>}
+      <form onSubmit={handleSubmit} className="employer-login-form">
+        <input
           type="email"
           name="email"
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
           required
-          className="login-input"
-          whileFocus={{ scale: 1.02 }}
+          className="employer-login-input"
         />
-        <motion.input
+        <input
           type="password"
           name="password"
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
           required
-          className="login-input"
-          whileFocus={{ scale: 1.02 }}
+          className="employer-login-input"
         />
-        <motion.button
+        <button
           type="submit"
           disabled={loading}
-          className="login-button"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          className="employer-login-button"
         >
           {loading ? "Submitting..." : "Login"}
-        </motion.button>
-      </motion.form>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.6 }}
-      >
-        <Link to="/forgot-password" className="forgot-password-link">Forgot password?</Link>
-      </motion.div>
-    </motion.div>
+        </button>
+      </form>
+    </div>
   );
 };
 
-export default Employerlogin;
+export default EmployerLogin;

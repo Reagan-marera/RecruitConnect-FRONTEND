@@ -4,16 +4,9 @@ import NavBar from './components/NavBar';
 import Landing from './components/Landing';
 import Joblist from './components/Joblist';
 import Footer from './components/Footer';
-<<<<<<< HEAD
-import EmployerLogin from './components/Employerlogin';
-import SeekerLogin from './components/Seekerlogin';
-import Register from './components/Register';
-import Overview from "./components/Overview";
 import EmployerDashboard from './components/EmployerDashboard';
-
 import './index.css'
 // import './App.css';
-=======
 import Logout from './components/Logout';
 import { useAuth } from './components/AuthContext';
 import EmployerLogin from './logincomponent/Employerlogin';
@@ -29,10 +22,9 @@ import JobPostingDetails from './components/JobPostingDetails';
 import JobPostingEdit from './components/JobPostingEditForm';
 import JobPostingList from './components/JobPostingList';
 import ForgotPassword from './logincomponent/ForgotPassword';
-import './App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
->>>>>>> main
+
 
 const App = () => {
   const auth = useAuth();
@@ -43,19 +35,7 @@ const App = () => {
       <div>
         <NavBar />
         <Routes>
-<<<<<<< HEAD
-          <Route>
-            <Route path="/" element={<Landing />}></Route>
-            <Route path="/joblist" element={<Joblist />} />
-            <Route path="/overview" element={<Overview />} />
-            <Route path="/employer-login" element={<EmployerLogin />}></Route>
-            <Route path="/employer-signup" element={<EmployerLogin />}></Route>
-            <Route path="/seeker-signup" element={<SeekerLogin />} />
-            <Route path="/seeker-login" element={<SeekerLogin />}></Route>
-            <Route path="/register" element={<Register />} />
-            <Route path="/employer-dashboard" element={<EmployerDashboard />} />
-          </Route>
-=======
+          
           <Route path="/" element={<Landing />} />
           <Route path="/joblist" element={<Joblist />} />
           <Route path="/employer-login" element={<EmployerLogin />} />
@@ -73,8 +53,9 @@ const App = () => {
           <Route path="/jobposting/:id" element={<JobPostingDetails />} />
           <Route path="/jobposting/edit/:id" element={<JobPostingEdit />} />
           <Route path="/jobposting/list" element={<JobPostingList />} />
+          <Route path="/employer-dashboard" element={<EmployerDashboard />} />
           {isAuthenticated && <Route path="/logout" element={<Logout />} />}
->>>>>>> main
+
         </Routes>
         <Footer />
         <ToastContainer />

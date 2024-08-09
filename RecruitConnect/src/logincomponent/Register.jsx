@@ -27,7 +27,7 @@ const Register = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
+    setFormData(prevState => ({
       ...prevState,
       [name]: value,
     }));
@@ -51,7 +51,7 @@ const Register = () => {
 
     try {
       await axios.post("http://127.0.0.1:5000/register", formData);
-      toast.success("Registration successful! Please to login.");
+      toast.success("Registration successful! Please login.");
       // Redirect based on user role
       if (formData.role === "user") {
         navigate("/seeker-login");
@@ -153,11 +153,10 @@ const Register = () => {
         >
           <option value="user">Job Seeker</option>
           <option value="employer">Employer</option>
-
-        </select>
+        </motion.select>
         {formData.role === "employer" && (
           <>
-            <input
+            <motion.input
               type="text"
               name="company_name"
               placeholder="Company Name"
@@ -165,7 +164,7 @@ const Register = () => {
               onChange={handleChange}
               className="register-input"
             />
-            <input
+            <motion.input
               type="email"
               name="contact_email"
               placeholder="Contact Email"
@@ -173,7 +172,7 @@ const Register = () => {
               onChange={handleChange}
               className="register-input"
             />
-            <input
+            <motion.input
               type="text"
               name="company_culture"
               placeholder="Company Culture"
@@ -181,7 +180,7 @@ const Register = () => {
               onChange={handleChange}
               className="register-input"
             />
-            <input
+            <motion.input
               type="text"
               name="job_openings"
               placeholder="Job Openings"
@@ -189,7 +188,7 @@ const Register = () => {
               onChange={handleChange}
               className="register-input"
             />
-            <input
+            <motion.input
               type="text"
               name="address"
               placeholder="Address"
@@ -197,7 +196,7 @@ const Register = () => {
               onChange={handleChange}
               className="register-input"
             />
-            <input
+            <motion.input
               type="text"
               name="phone_number"
               placeholder="Phone Number"
@@ -207,9 +206,6 @@ const Register = () => {
             />
           </>
         )}
-        <button type="submit" disabled={loading} className="register-button">
-
-        </motion.select>
         <motion.button
           type="submit"
           disabled={loading}
