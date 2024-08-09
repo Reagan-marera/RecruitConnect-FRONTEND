@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 
 const Sidebar = ({ activeTab, setActiveTab, tabs, isOpen }) => {
   console.log("Sidebar render", { activeTab, isOpen, tabs });
