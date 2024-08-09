@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import "../Navbar.css";
+import LogoutButton from "./Logout";
 
 const Navbar = () => {
   const [dropdown, setDropdown] = useState({
     login: false
   });
+  const accessToken = localStorage.getItem('token');
 
   const toggleDropdown = (type) => {
     setDropdown((prev) => ({
@@ -44,9 +46,13 @@ const Navbar = () => {
             <DropdownItem to="/employer-login">As Employer</DropdownItem>
             <DropdownItem to="/seeker-login">As Job-Seeker</DropdownItem>
           </NavItem>
+
           <Link to="/register" className="nav-button">
             Register
           </Link>
+          {accessToken && (
+            <LogoutButton />
+          )}
         </div>
       </div>
     </nav>

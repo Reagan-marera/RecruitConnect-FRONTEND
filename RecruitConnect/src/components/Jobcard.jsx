@@ -1,7 +1,30 @@
 import React from 'react';
 import '../jobcard.css';
+import { FaSave, FaArrowRight } from 'react-icons/fa'; // Add this import for icons
 
 const JobCard = ({ job, onClick, detailed }) => {
+  const handleSave = () => {
+    // Add logic to save the job, e.g., making a POST request to a certain route
+    fetch('/api/save-job', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ jobId: job.id }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Job saved:', data);
+      })
+      .catch(error => {
+        console.error('Error saving job:', error);
+      });
+  };
+
+  const handleApply = () => {
+    window.location.href = `/apply-job/${job.id}`;
+  };
+
   return (
     <div className={`job-card ${detailed ? 'detailed' : ''}`} onClick={onClick}>
       <h2>{job.title}</h2>
@@ -15,6 +38,14 @@ const JobCard = ({ job, onClick, detailed }) => {
           <p><strong>Posted at:</strong> {new Date(job.posted_at).toLocaleString()}</p>
         </>
       )}
+      <div className="job-card-buttons">
+        <button className="save-button" onClick={handleSave}>
+          <FaSave /> Save
+        </button>
+        <button className="apply-button" onClick={handleApply}>
+          <FaArrowRight /> Apply
+        </button>
+      </div>
     </div>
   );
 };

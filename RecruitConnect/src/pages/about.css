@@ -1,0 +1,177 @@
+/* about.css */
+
+.about-container {
+  position: relative;
+  background-color: #e0f7fa; /* Light teal background */
+  color: #1f2937; /* Dark gray text */
+  min-height: 100vh;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.about-header h1 {
+  font-size: 2.5rem;
+  color: #004d40; /* Dark teal for the header */
+}
+
+.about-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.about-image {
+  text-align: center;
+}
+
+.about-image img {
+  width: 100%;
+  max-width: 800px;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.about-mission, .about-what-we-do {
+  background-color: #ffffff; /* White background for sections */
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-mission h2, .about-what-we-do h2 {
+  font-size: 1.75rem;
+  color: #004d40; /* Dark teal for section titles */
+}
+
+.about-mission p, .about-what-we-do p {
+  font-size: 1rem;
+  color: #004d40; /* Dark teal text */
+}
+
+.about-data {
+  background-color: #ffffff; /* White background for data section */
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-data h2 {
+  font-size: 1.75rem;
+  color: #004d40; /* Dark teal for section title */
+  margin-bottom: 1.5rem;
+}
+
+.data-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.data-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.data-icon {
+  background-color: #b2dfdb; /* Light teal background for icons */
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.data-info {
+  flex: 1;
+}
+
+.data-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #004d40; /* Dark teal for titles */
+}
+
+.data-value {
+  font-size: 1rem;
+  color: #004d40; /* Dark teal text */
+}
+
+.charts {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.chart-card {
+  background-color: #ffffff; /* White background for chart cards */
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-card h3 {
+  font-size: 1.25rem;
+  color: #004d40; /* Dark teal for chart titles */
+  margin-bottom: 1rem;
+}
+
+.chart {
+  position: relative;
+  width: 100%;
+  height: 200px;
+}
+
+.circle-chart {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.circle-chart circle {
+  transition: stroke-dasharray 1s;
+}
+
+.chart-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.percentage {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #004d40; /* Dark teal for percentage */
+}
+
+.label {
+  font-size: 1rem;
+  color: #004d40; /* Dark teal for label */
+}
+
+.about-footer {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.about-footer p {
+  font-size: 1rem;
+  color: #004d40; /* Dark teal text */
+}
+
+.about-footer a {
+  color: #004d40; /* Dark teal for links */
+  text-decoration: underline;
+}
