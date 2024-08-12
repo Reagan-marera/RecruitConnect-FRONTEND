@@ -7,8 +7,7 @@ const JobPostingForm = () => {
     const [jobTitle, setJobTitle] = useState('');
     const [description, setDescription] = useState('');
     const [location, setLocation] = useState('');
-    const [companyEmail, setCompanyEmail] = useState('');
-    const [employerId, setEmployerId] = useState('');
+    const [companyEmail, setCompanyEmail] = useState(''); // New field for company email
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
     const navigate = useNavigate();
@@ -25,8 +24,7 @@ const JobPostingForm = () => {
                     title: jobTitle,
                     description: description,
                     location: location,
-                    company_email: companyEmail,
-                    employer_id: employerId,
+                    company_email: companyEmail, // Include company email
                 },
                 {
                     headers: {
@@ -84,21 +82,13 @@ const JobPostingForm = () => {
                 onChange={(e) => setLocation(e.target.value)} 
                 required 
             />
-
-            <label>Company Email</label>
+            
+            <label>Company Email</label> {/* New label for company email */}
             <input 
                 className="job-posting-form__input"
                 type="email" 
                 value={companyEmail} 
                 onChange={(e) => setCompanyEmail(e.target.value)} 
-                required 
-            />
-
-            <label>Employer ID</label>
-            <input 
-                className="job-posting-form__input"
-                value={employerId} 
-                onChange={(e) => setEmployerId(e.target.value)} 
                 required 
             />
 
