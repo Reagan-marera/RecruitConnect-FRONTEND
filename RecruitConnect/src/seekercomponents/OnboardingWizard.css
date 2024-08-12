@@ -1,0 +1,35 @@
+.onboarding-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f7f7f7;
+  border-radius: 10px;
+}
+
+.onboarding-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.onboarding-form input,
+.onboarding-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.onboarding-form button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.onboarding-form button:hover {
+  background-color: #0056b3;
+}
