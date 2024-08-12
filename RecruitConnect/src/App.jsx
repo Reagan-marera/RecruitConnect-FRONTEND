@@ -5,8 +5,7 @@ import Landing from './components/Landing';
 import Joblist from './components/Joblist';
 import Footer from './components/Footer';
 import EmployerDashboard from './components/EmployerDashboard';
-import './index.css'
-// import './App.css';
+import ApplyJob from './seekercomponents/ApplyJob';
 import Logout from './components/Logout';
 import { useAuth } from './components/AuthContext';
 import EmployerLogin from './logincomponent/Employerlogin';
@@ -55,6 +54,7 @@ const App = () => {
           <Route path="/jobposting/list" element={<JobPostingList />} />
           <Route path="/employer-dashboard" element={<EmployerDashboard />} />
           {isAuthenticated && <Route path="/logout" element={<Logout />} />}
+          <Route path="/apply-job/:jobId" element={<ApplyJob />} />        
 
         </Routes>
         <Footer />
