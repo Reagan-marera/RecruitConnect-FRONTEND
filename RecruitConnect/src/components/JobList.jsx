@@ -3,6 +3,7 @@ import JobCard from './Jobcard';
 import '../joblist.css';
 import SearchBar from './Search';
 
+
 const Joblist = () => {
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);

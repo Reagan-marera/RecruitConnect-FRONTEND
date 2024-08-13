@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Landing from './components/Landing';
-import Joblist from './components/Joblist';
+import Joblist from './components/JobList';
 import Footer from './components/Footer';
 import EmployerDashboard from './components/EmployerDashboard';
 import './index.css'
@@ -22,6 +22,7 @@ import JobPostingDetails from './components/JobPostingDetails';
 import JobPostingEdit from './components/JobPostingEditForm';
 import JobPostingList from './components/JobPostingList';
 import ForgotPassword from './logincomponent/ForgotPassword';
+import JobList from './components/JobList';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -54,6 +55,7 @@ const App = () => {
           <Route path="/jobposting/edit/:id" element={<JobPostingEdit />} />
           <Route path="/jobposting/list" element={<JobPostingList />} />
           <Route path="/employer-dashboard" element={<EmployerDashboard />} />
+          <Route path="/joblist" element={<JobList/>} />
           {isAuthenticated && <Route path="/logout" element={<Logout />} />}
 
         </Routes>

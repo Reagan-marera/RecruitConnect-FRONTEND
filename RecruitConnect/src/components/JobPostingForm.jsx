@@ -7,7 +7,7 @@ const JobPostingForm = () => {
     const [jobTitle, setJobTitle] = useState('');
     const [description, setDescription] = useState('');
     const [location, setLocation] = useState('');
-    const [companyEmail, setCompanyEmail] = useState(''); // New field for company email
+    const [companyEmail, setCompanyEmail] = useState(''); 
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ const JobPostingForm = () => {
                     title: jobTitle,
                     description: description,
                     location: location,
-                    company_email: companyEmail, // Include company email
+                    company_email: companyEmail, 
                 },
                 {
                     headers: {
