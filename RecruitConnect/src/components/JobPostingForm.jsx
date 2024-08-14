@@ -38,7 +38,7 @@ const JobPostingForm = () => {
 
             setSuccessMessage('Job posted successfully!');
             setError(null);
-            navigate('/jobs');
+            navigate('/employer-dashboard');
 
         } catch (error) {
             console.error('Error posting job:', error);
