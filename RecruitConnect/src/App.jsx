@@ -26,7 +26,9 @@ import ForgotPassword from './logincomponent/ForgotPassword';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import JobListings from './components/JobListings';
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { Link } from 'react-router-dom';
+
 
 
 const App = () => {
