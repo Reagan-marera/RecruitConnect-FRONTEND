@@ -4,8 +4,8 @@
   border-radius: 8px;
   padding: 1rem;
   width: calc(25% - 0.75rem); /* Adjust width to fit four cards per row */
-  height: 150px; /* Fixed height to make cards square */
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  height: 150px; /* Default height for non-expanded state */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, height 0.3s ease;
   background-color: #fff;
   cursor: pointer;
   box-sizing: border-box; /* Include padding and border in the width */
@@ -13,6 +13,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+/* Expanded state for job cards */
+.job-card.expanded {
+  height: auto; /* Allow the card to expand to fit content */
 }
 
 /* Hover effect for job cards */
@@ -33,4 +38,34 @@
 .job-card p {
   margin: 5px 0;
   text-align: center; /* Center text inside card */
+}
+
+/* Container for buttons to keep them at the bottom */
+.job-card-buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Style for Save and Apply buttons */
+.save-button,
+.apply-button {
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+}
+
+.save-button {
+  background-color: #28a745; /* Green background for Save button */
+  color: #fff;
+}
+
+.apply-button {
+  background-color: #007bff; /* Blue background for Apply button */
+  color: #fff;
 }
