@@ -49,7 +49,7 @@ const ApplyJob = () => {
       }
 
       alert('Application submitted successfully!');
-      navigate('/joblist');
+      navigate('/ApplicationsList');
     } catch (error) {
       console.error('Error submitting application:', error);
       alert('An error occurred while submitting your application. Please try again.');
