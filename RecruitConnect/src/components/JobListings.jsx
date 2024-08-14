@@ -74,6 +74,8 @@ const JobListings = () => {
               <p className="text-gray-700">{job.description}</p>
               <p><strong>Location:</strong> {job.location}</p>
               <p><strong>Posted:</strong> {new Date(job.created_at).toLocaleDateString()}</p>
+              <p><strong>Benefits:</strong> {job.benefits}</p> {/* Displaying benefits */}
+              <p><strong>Responsibilities:</strong> {job.responsibilities}</p> {/* Displaying responsibilities */}
             </li>
           ))}
         </ul>
