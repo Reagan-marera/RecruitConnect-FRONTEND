@@ -32,7 +32,6 @@ const Landing = () => {
           
             <div className="cta-buttons">
               <button className="btn btn-primary" onClick={handleFindJobsClick}>Find Jobs</button>
-             <Link to="/jobposting"> <button className="btn btn-secondary">Post a Job</button></Link>
             </div>
           </div>
         </section>

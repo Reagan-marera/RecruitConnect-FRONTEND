@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, Link } from 'react-router-dom';
+import { NavLink, Route, Routes } from 'react-router-dom';
 import Application from './Application';
 // import Profile from './Profile';
 import OnboardingWizard from './OnboardingWizard';
@@ -31,7 +31,6 @@ function JobSeeker() {
       <div className="jobseeker-content">
         <Routes>
           <Route path="application" element={<Application />} />
-          {/* <Route path="profile" element={<Profile />} /> */}
           <Route path="profile" element={<OnboardingWizard />} />
           <Route path="savedjobs" element={<Savedjobs />} />
         </Routes>

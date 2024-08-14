@@ -7,16 +7,28 @@ const JobPostingForm = () => {
     const [jobTitle, setJobTitle] = useState('');
     const [description, setDescription] = useState('');
     const [location, setLocation] = useState('');
-    const [companyEmail, setCompanyEmail] = useState('');
-    const [employerId, setEmployerId] = useState('');
+    const [companyEmail, setCompanyEmail] = useState(''); 
+    const [benefits, setBenefits] = useState(''); 
+    const [responsibilities, setResponsibilities] = useState(''); 
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
     const navigate = useNavigate();
 
+    const refreshAccessToken = async () => {
+        try {
+            const refreshToken = localStorage.getItem('refreshToken');
+            const response = await axios.post('http://127.0.0.1:5000/refresh', { token: refreshToken });
+            localStorage.setItem('token', response.data.accessToken);
+            return response.data.accessToken;
+        } catch (error) {
+            console.error('Failed to refresh token:', error);
+            return null;
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const token = localStorage.getItem('token');
+        let token = localStorage.getItem('token');
 
         try {
             const response = await axios.post(
@@ -26,7 +38,8 @@ const JobPostingForm = () => {
                     description: description,
                     location: location,
                     company_email: companyEmail,
-                    employer_id: employerId,
+                    benefits: benefits,
+                    responsibilities: responsibilities,
                 },
                 {
                     headers: {
@@ -41,17 +54,23 @@ const JobPostingForm = () => {
             navigate('/jobs');
 
         } catch (error) {
-            console.error('Error posting job:', error);
-            if (error.response) {
-                console.error('Error response status:', error.response.status);
-                console.error('Error response data:', error.response.data);
-                setError(error.response.data.message || 'Failed to post job. Please try again.');
-            } else if (error.request) {
-                console.error('Error request:', error.request);
-                setError('No response from the server. Please try again.');
+            if (error.response && error.response.status === 401 && error.response.data.msg === 'Token has expired') {
+                token = await refreshAccessToken();
+                if (token) {
+                    handleSubmit(e); // Retry with the new token
+                } else {
+                    setError('Your session has expired. Please log in again.');
+                    navigate('/login');
+                }
             } else {
-                console.error('Error message:', error.message);
-                setError('An unexpected error occurred. Please try again.');
+                console.error('Error posting job:', error);
+                if (error.response) {
+                    setError(error.response.data.message || 'Failed to post job. Please try again.');
+                } else if (error.request) {
+                    setError('No response from the server. Please try again.');
+                } else {
+                    setError('An unexpected error occurred. Please try again.');
+                }
             }
             setSuccessMessage(null);
         }
@@ -84,22 +103,32 @@ const JobPostingForm = () => {
                 onChange={(e) => setLocation(e.target.value)} 
                 required 
             />
-
+            
             <label>Company Email</label>
             <input 
                 className="job-posting-form__input"
                 type="email" 
                 value={companyEmail} 
                 onChange={(e) => setCompanyEmail(e.target.value)} 
-                required 
+                required
             />
 
-            <label>Employer ID</label>
-            <input 
+            <label>Benefits</label>
+            <input
                 className="job-posting-form__input"
-                value={employerId} 
-                onChange={(e) => setEmployerId(e.target.value)} 
-                required 
+                type="text"
+                value={benefits}
+                onChange={(e) => setBenefits(e.target.value)}
+                required
+            />
+
+            <label>Responsibilities</label>
+            <input
+                className="job-posting-form__input"
+                type="text"
+                value={responsibilities}
+                onChange={(e) => setResponsibilities(e.target.value)}
+                required
             />
 
             <button 

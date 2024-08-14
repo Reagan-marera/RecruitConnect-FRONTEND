@@ -1,134 +1,147 @@
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import './Profile.css';
 
-// const Profile = () => {
-//   const [user, setUser] = useState({
-//     username: '',
-//     email: '',
-//     phone_number: '',
-//     address: '',
-//     bio: '',
-//     resume: '',
-//     picture_url: ''
-//   });
-//   const [message, setMessage] = useState('');
-//   const [editMode, setEditMode] = useState(false);
+import React, { useState } from 'react';
+import './Profile.css';
 
-//   useEffect(() => {
-//     const fetchProfile = async () => {
-//       try {
-//         const response = await axios.get('http://127.0.0.1:5000/profile', {
-//           headers: {
-//             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-//           }
-//         });
-//         setUser(response.data);
-//       } catch (error) {
-//         console.error('Error fetching profile:', error);
-//       }
-//     };
+const Profile = () => {
+  const [user, setUser] = useState({
+    username: '',
+    email: '',
+    phone_number: '',
+    address: '',
+    bio: '',
+    profile_picture: '', 
+  });
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+  const [preview, setPreview] = useState(null); // New state for image preview
 
-//     fetchProfile();
-//   }, []);
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === 'profile_picture' && files && files[0]) {
+      setUser((prevUser) => ({
+        ...prevUser,
+        profile_picture: files[0],
+      }));
+      setPreview(URL.createObjectURL(files[0])); // Set preview URL
+    } else {
+      setUser((prevUser) => ({
+        ...prevUser,
+        [name]: value,
+      }));
+    }
+  };
 
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setUser(prevUser => ({
-//       ...prevUser,
-//       [name]: value,
-//     }));
-//   };
+  const validateForm = () => {
+    if (!user.username || !user.email || !user.phone_number) {
+      setError('Username, email, and phone number are required.');
+      return false;
+    }
+    return true;
+  };
 
-//   const handleFileChange = (e) => {
-//     const { name, files } = e.target;
-//     setUser(prevUser => ({
-//       ...prevUser,
-//       [name]: files[0],
-//     }));
-//   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+    setError('');
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     const formData = new FormData();
-//     formData.append('username', user.username);
-//     formData.append('email', user.email);
-//     formData.append('phone', user.phone_number);
-//     formData.append('address', user.address);
-//     formData.append('bio', user.bio);
-//     if (user.picture_url) {
-//       formData.append('profilePicture', user.picture_url);
-//     }
-//     if (user.resume) {
-//       formData.append('resume', user.resume);
-//     }
+    const formData = new FormData();
+    formData.append('username', user.username);
+    formData.append('email', user.email);
+    formData.append('phone_number', user.phone_number);
+    formData.append('address', user.address);
+    formData.append('bio', user.bio);
+    formData.append('profile_picture', user.profile_picture); 
 
-//     try {
-//       const response = await axios.post('http://127.0.0.1:5000/profile', formData, {
-//         headers: {
-//           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-//           'Content-Type': 'multipart/form-data'
-//         }
-//       });
-//       setMessage('Profile updated successfully!');
-//       setEditMode(false);
-//     } catch (error) {
-//       console.error('Error updating profile:', error);
-//       setMessage('An error occurred while updating the profile. Please try again.');
-//     }
-//   };
+    try {
+      const response = await fetch('http://127.0.0.1:5000/profile', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+        },
+        body: formData,
+      });
 
-//   return (
-//     <div className="profile-container">
-//       <h2>Profile</h2>
-//       {editMode ? (
-//         <form onSubmit={handleSubmit}>
-//           <label>
-//             Username:
-//             <input type="text" name="username" value={user.username}
-//              onChange={handleChange} />
-//           </label>
-//           <label>
-//             Email:
-//             <input type="email" name="email" value={user.email} onChange={handleChange} />
-//           </label>
-//           <label>
-//             Phone:
-//             <input type="tel" name="phone" value={user.phone_number} onChange={handleChange} />
-//           </label>
-//           <label>
-//             Address:
-//             <input type="text" name="address" value={user.address} onChange={handleChange} />
-//           </label>
-//           <label>
-//             Bio:
-//             <textarea name="bio" value={user.bio} onChange={handleChange}></textarea>
-//           </label>
-//           <label>
-//             Profile Picture:
-//             <input type="file" name="profilePicture" onChange={handleFileChange} />
-//           </label>
-//           <label>
-//             Resume:
-//             <input type="file" name="resume" onChange={handleFileChange} />
-//           </label>
-//           <button type="submit">Save</button>
-//         </form>
-//       ) : (
-//         <div className="profile-view">
-//           {user.profilePicture && <img src={URL.createObjectURL(user.picture_url)} alt="Profile" />}
-//           <p><strong>Username:</strong> {user.username}</p>
-//           <p><strong>Email:</strong> {user.email}</p>
-//           <p><strong>Phone:</strong> {user.phone_number}</p>
-//           <p><strong>Address:</strong> {user.address}</p>
-//           <p><strong>Bio:</strong> {user.bio}</p>
-//           {user.resume && <a href={URL.createObjectURL(user.resume)} target="_blank" rel="noopener noreferrer">View Resume</a>}
-//           <button onClick={() => setEditMode(true)}>Edit</button>
-//         </div>
-//       )}
-//       {message && <p>{message}</p>}
-//     </div>
-//   );
-// };
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to create profile');
+      }
 
-// export default Profile;
+      const result = await response.json();
+      setMessage('Profile created successfully!');
+      setUser(result.user); 
+
+    } catch (error) {
+      console.error('Error creating profile:', error);
+      setError('An error occurred while creating the profile. Please try again.');
+    }
+  };
+
+  return (
+    <div className="profile-container">
+      <h2>Create Profile</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Username:
+          <input
+            type="text"
+            name="username"
+            value={user.username}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Email:
+          <input
+            type="email"
+            name="email"
+            value={user.email}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Phone Number:
+          <input
+            type="tel"
+            name="phone_number"
+            value={user.phone_number}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Address:
+          <input
+            type="text"
+            name="address"
+            value={user.address}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Bio:
+          <textarea
+            name="bio"
+            value={user.bio}
+            onChange={handleChange}
+          ></textarea>
+        </label>
+        <label>
+          Profile Picture:
+          <input
+            type="file"
+            name="profile_picture"
+            onChange={handleChange}
+          />
+        </label>
+        {preview && <img src={preview} alt="Profile Preview" className="profile-preview" />} {/* Image Preview */}
+        <button type="submit">Create Profile</button>
+      </form>
+      {message && <p className="success-message">{message}</p>}
+      {error && <p className="error-message">{error}</p>}
+    </div>
+  );
+};
+
+export default Profile;
