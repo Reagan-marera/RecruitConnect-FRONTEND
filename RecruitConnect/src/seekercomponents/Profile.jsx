@@ -12,7 +12,7 @@ const Profile = () => {
   });
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-  const [preview, setPreview] = useState(null); // New state for image preview
+  const [preview, setPreview] = useState(null); 
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -21,8 +21,7 @@ const Profile = () => {
         ...prevUser,
         profile_picture: files[0],
       }));
-      setPreview(URL.createObjectURL(files[0])); // Set preview URL
-    } else {
+      setPreview(URL.createObjectURL(files[0])); 
       setUser((prevUser) => ({
         ...prevUser,
         [name]: value,
