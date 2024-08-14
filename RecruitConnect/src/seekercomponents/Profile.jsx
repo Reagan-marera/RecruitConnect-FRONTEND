@@ -12,13 +12,22 @@ const Profile = () => {
   });
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [preview, setPreview] = useState(null); // New state for image preview
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
-      [name]: value,
-    }));
+    const { name, value, files } = e.target;
+    if (name === 'profile_picture' && files && files[0]) {
+      setUser((prevUser) => ({
+        ...prevUser,
+        profile_picture: files[0],
+      }));
+      setPreview(URL.createObjectURL(files[0])); // Set preview URL
+    } else {
+      setUser((prevUser) => ({
+        ...prevUser,
+        [name]: value,
+      }));
+    }
   };
 
   const validateForm = () => {
@@ -122,10 +131,10 @@ const Profile = () => {
           <input
             type="file"
             name="profile_picture"
-            value={user.profile_picture}
             onChange={handleChange}
           />
         </label>
+        {preview && <img src={preview} alt="Profile Preview" className="profile-preview" />} {/* Image Preview */}
         <button type="submit">Create Profile</button>
       </form>
       {message && <p className="success-message">{message}</p>}
