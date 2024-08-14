@@ -51,7 +51,7 @@ const JobPostingForm = () => {
 
             setSuccessMessage('Job posted successfully!');
             setError(null);
-            navigate('/jobs');
+            navigate('/employer-dashboard');
 
         } catch (error) {
             if (error.response && error.response.status === 401 && error.response.data.msg === 'Token has expired') {
