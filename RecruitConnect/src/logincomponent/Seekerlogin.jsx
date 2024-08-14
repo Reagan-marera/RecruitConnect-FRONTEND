@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -17,12 +17,16 @@ const Seekerlogin = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
+  const checkUserProfile = useCallback(() => {
     const token = localStorage.getItem("token");
     if (token && location.pathname !== "/seeker-login") {
-      navigate("/"); 
+      navigate("/");
     }
   }, [navigate, location.pathname]);
+
+  useEffect(() => {
+    checkUserProfile();
+  }, [checkUserProfile]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -34,20 +38,27 @@ const Seekerlogin = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://127.0.0.1:5000/login", formData);
+      const response = await axios.post(
+        "http://127.0.0.1:5000/login",
+        formData
+      );
       localStorage.setItem("token", response.data.access_token);
       toast.success("Seeker logged in successfully!");
-      navigate("/jobseeker"); 
+      navigate("/jobseeker");
     } catch (error) {
-      setError(error.response?.data?.error || "Failed to login. Please try again.");
-      toast.error(error.response?.data?.error || "Failed to login. Please try again.");
+      setError(
+        error.response?.data?.error || "Failed to login. Please try again."
+      );
+      toast.error(
+        error.response?.data?.error || "Failed to login. Please try again."
+      );
     } finally {
       setLoading(false);
-    };
+    }
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="login-container"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -55,8 +66,8 @@ const Seekerlogin = () => {
     >
       <h2 className="login-header">Seeker Login</h2>
       {error && <p className="error-message">{error}</p>}
-      <motion.form 
-        onSubmit={handleSubmit} 
+      <motion.form
+        onSubmit={handleSubmit}
         className="login-form"
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -84,9 +95,9 @@ const Seekerlogin = () => {
           whileFocus={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
         />
-        <motion.button 
-          type="submit" 
-          disabled={loading} 
+        <motion.button
+          type="submit"
+          disabled={loading}
           className="login-button"
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.3 }}
@@ -94,7 +105,9 @@ const Seekerlogin = () => {
           {loading ? "Submitting..." : "Login"}
         </motion.button>
       </motion.form>
-      <Link to="/forgot-password" className="forgot-password-link">Forgot password?</Link>
+      <Link to="/forgot-password" className="forgot-password-link">
+        Forgot password?
+      </Link>
     </motion.div>
   );
 };
