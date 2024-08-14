@@ -1,41 +1,52 @@
-search-bar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    background-color: #e3f2fd; 
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    margin: 20px auto;
-  }
-  
-  .search-bar input[type="text"] {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #90caf9;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: #fff; 
-  }
-  
-  .search-bar input[type="text"]:focus {
-    outline: none;
-    border-color: #42a5f5; 
-    box-shadow: 0 0 5px rgba(66, 165, 245, 0.5); 
-  }
-  
-  .search-bar button[type="submit"] {
-    padding: 10px 20px;
-    background-color: #42a5f5;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .search-bar button[type="submit"]:hover {
-    background-color: #1e88e5; /* Darker blue on hover */
-  }
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 25px;
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb); /* Gradient background */
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Larger shadow for depth */
+  max-width: 450px;
+  margin: 40px auto;
+  transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+.search-bar:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.search-bar input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #90caf9;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: #fff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-bar input[type="text"]:focus {
+  outline: none;
+  border-color: #42a5f5;
+  box-shadow: 0 0 10px rgba(66, 165, 245, 0.5);
+}
+
+.search-bar button[type="submit"] {
+  width: 100%;
+  padding: 12px 25px;
+  background: linear-gradient(135deg, #42a5f5, #1e88e5); /* Gradient button */
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.search-bar button[type="submit"]:hover {
+  background: linear-gradient(135deg, #1e88e5, #1565c0); /* Darker gradient on hover */
+  transform: scale(1.02); /* Slight enlarge on hover */
+}
