@@ -2,9 +2,10 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Landing from './components/Landing';
-import Joblist from './components/Joblist';
+import JobList from './components/JobList'; // Ensure this matches your component name
 import Footer from './components/Footer';
 import EmployerDashboard from './components/EmployerDashboard';
+import './index.css';
 import ApplyJob from './seekercomponents/ApplyJob';
 import Logout from './components/Logout';
 import { useAuth } from './components/AuthContext';
@@ -21,13 +22,13 @@ import JobPostingDetails from './components/JobPostingDetails';
 import JobPostingEdit from './components/JobPostingEditForm';
 import JobPostingList from './components/JobPostingList';
 import ForgotPassword from './logincomponent/ForgotPassword';
+//import JobListings from './jobListingscomponent/JobListings';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import JobListings from './components/JobListings';
 
 const App = () => {
-  const auth = useAuth();
-  const isAuthenticated = auth ? auth.isAuthenticated : false;
+  const { isAuthenticated } = useAuth(); // Destructure directly from useAuth()
 
   return (
     <>
@@ -54,7 +55,8 @@ const App = () => {
           <Route path="/jobposting/list" element={<JobPostingList />} />
           <Route path="/employer-dashboard" element={<EmployerDashboard />} />
           {isAuthenticated && <Route path="/logout" element={<Logout />} />}
-          <Route path="/apply-job/:jobId" element={<ApplyJob />} />        
+          <Route path="/apply-job/:jobId" element={<ApplyJob />} />   
+          <Route path="/joblistings" element={<JobListings />} />
 
         </Routes>
         <Footer />
