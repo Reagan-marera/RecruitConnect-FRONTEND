@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Landing from './components/Landing';
-import JobList from './components/JobList'; // Ensure this matches your component name
+import Joblist from './components/JobList'; // Ensure this matches your component name
 import Footer from './components/Footer';
 import EmployerDashboard from './components/EmployerDashboard';
 import './index.css';
@@ -26,6 +26,8 @@ import ForgotPassword from './logincomponent/ForgotPassword';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import JobListings from './components/JobListings';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 const App = () => {
   const { isAuthenticated } = useAuth(); // Destructure directly from useAuth()
