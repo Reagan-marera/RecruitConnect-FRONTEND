@@ -1,80 +1,56 @@
-:root {
-  --primary-bg-color: #0323696b;
-  --secondary-bg-color: #f4f4f4;
-  --button-bg-color: #575757;
-  --button-hover-bg-color: grey;
-  --button-color: #fff;
-  --container-padding: 40px 20px;
-  --nav-padding: 24px;
-  --content-padding: 20px;
-  --border-radius: 9px;
-  --button-border-radius: 20px;
-  --box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  --transition-duration: 0.3s;
-}
-
 .jobseeker-container {
   display: flex;
-  padding: var(--container-padding);
+  min-height: 100vh;
+  background-color: #ffffffc5;
 }
 
 .jobseeker-navbar {
-  background-color: var(--primary-bg-color);
-  padding: var(--nav-padding);
-  border-radius: var(--border-radius);
-  width: 200px;
-  margin-right: 20px;
-  flex-shrink: 0;
-  position: sticky;
-  top: 40px;
-}
-
-.jobseeker-content {
-  flex-grow: 1;
-  padding: var(--content-padding);
-  background-color: var(--secondary-bg-color);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
+  width: 250px;
+  background-color: #161b22; 
+  border-right: 1px solid #1e2124;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .jobseeker-nav-list {
-  list-style-type: none;
-  margin: 0;
+  list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .jobseeker-nav-item {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .jobseeker-nav-button {
   display: block;
-  color: var(--button-color);
+  padding: 10px 15px;
+  font-size:20px;
+  font-weight: 500;
+  color: #ffffff;
   text-decoration: none;
-  padding: 8px 24px;
-  background-color: var(--button-bg-color);
-  border-radius: var(--button-border-radius);
-  transition: background-color var(--transition-duration), transform var(--transition-duration);
+  border-radius: 6px;
+  background-color: transparent;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .jobseeker-nav-button:hover {
-  background-color: var(--button-hover-bg-color);
-  transform: scale(1.05);
+  background-color: #000000;
+  color: #ffffff; 
 }
 
-@media (max-width: 768px) {
-  .jobseeker-container {
-    flex-direction: column;
-  }
-
-  .jobseeker-navbar {
-    width: 100%;
-    margin-bottom: 20px;
-  }
+.jobseeker-nav-button.active {
+  background-color: #1E96FC; 
+  color: #ffffff;
 }
 
-@media (max-width: 480px) {
-  .jobseeker-nav-button {
-    padding: 6px 12px;
-  }
+.jobseeker-content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #F8FFE5; 
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  margin: 20px;
+  color: #000000;
+  overflow-y: auto;
 }

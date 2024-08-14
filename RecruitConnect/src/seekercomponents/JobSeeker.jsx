@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, Link } from 'react-router-dom';
+import { NavLink, Route, Routes } from 'react-router-dom';
 import Application from './Application';
 import Profile from './Profile';
 import Savedjobs from './Savedjobs';
@@ -11,13 +11,13 @@ function JobSeeker() {
       <nav className="jobseeker-navbar">
         <ul className="jobseeker-nav-list">
           <li className="jobseeker-nav-item">
-            <Link to="profile" className="jobseeker-nav-button">Profile</Link>
+            <NavLink to="profile" className="jobseeker-nav-button" activeClassName="active">Profile</NavLink>
           </li>
           <li className="jobseeker-nav-item">
-            <Link to="application" className="jobseeker-nav-button">Job Application</Link>
+            <NavLink to="application" className="jobseeker-nav-button" activeClassName="active">Job Application</NavLink>
           </li>
           <li className="jobseeker-nav-item">
-            <Link to="savedjobs" className="jobseeker-nav-button">Saved Jobs</Link>
+            <NavLink to="savedjobs" className="jobseeker-nav-button" activeClassName="active">Saved Jobs</NavLink>
           </li>
         </ul>
       </nav>
