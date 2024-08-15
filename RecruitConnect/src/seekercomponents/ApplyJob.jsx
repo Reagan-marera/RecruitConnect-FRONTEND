@@ -12,8 +12,9 @@ const ApplyJob = () => {
     resume: null,
     coverLetter: null,
     portfolio: null,
-    // Other fields...
+    portfolioLink: '',
   });
+  const [loading, setLoading] = useState(false); 
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -25,6 +26,8 @@ const ApplyJob = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); 
+
     const formDataToSend = new FormData();
 
     for (const key in formData) {
@@ -53,6 +56,8 @@ const ApplyJob = () => {
     } catch (error) {
       console.error('Error submitting application:', error);
       alert('An error occurred while submitting your application. Please try again.');
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -60,7 +65,6 @@ const ApplyJob = () => {
     <div className="apply-job-form">
       <h2>Apply for Job</h2>
       <form onSubmit={handleSubmit}>
-        {/* Personal Information */}
         <div>
           <label htmlFor="name">Full Name</label>
           <input
@@ -97,7 +101,6 @@ const ApplyJob = () => {
           />
         </div>
 
-        {/* Resume Upload */}
         <div>
           <label htmlFor="resume">Upload Resume</label>
           <input
@@ -110,7 +113,6 @@ const ApplyJob = () => {
           />
         </div>
 
-        {/* Cover Letter Upload or Text Area */}
         <div>
           <label htmlFor="coverLetter">Cover Letter (Optional)</label>
           <textarea
@@ -123,13 +125,12 @@ const ApplyJob = () => {
           <input
             type="file"
             id="coverLetterFile"
-            name="coverLetterFile"
+            name="coverLetter"
             onChange={handleChange}
             accept=".pdf,.doc,.docx"
           />
         </div>
 
-        {/* Portfolio Upload or Link */}
         <div>
           <label htmlFor="portfolio">Portfolio (Optional)</label>
           <input
@@ -148,9 +149,9 @@ const ApplyJob = () => {
             onChange={handleChange}
           />
         </div>
-
-        {/* Submit Button */}
-        <button type="submit">Submit Application</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Submitting...' : 'Submit Application'}
+        </button>
       </form>
     </div>
   );
