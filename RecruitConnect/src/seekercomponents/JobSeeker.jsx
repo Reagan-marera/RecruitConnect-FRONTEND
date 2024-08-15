@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import Application from './Application';
-// import Profile from './Profile';
-import OnboardingWizard from './OnboardingWizard';
+import Profile from './Profile';
 import Savedjobs from './Savedjobs';
 import './seeker.css';
 import ApplicationsList from './ApplicationsList';
@@ -37,7 +36,7 @@ function JobSeeker() {
       <div className="jobseeker-content">
         <Routes>
           <Route path="application" element={<Application />} />
-          <Route path="profile" element={<OnboardingWizard />} />
+          <Route path="profile" element={<Profile />} />
           <Route path="savedjobs" element={<Savedjobs />} />
           <Route path="ApplicationsList" element={<ApplicationsList/>} />
         </Routes>
