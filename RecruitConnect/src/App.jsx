@@ -1,11 +1,11 @@
+// src/App.js
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
-import Landing from './components/Landing';
-import Joblist from './components/JobList'; // Ensure this matches your component name
 import Footer from './components/Footer';
+import Landing from './components/Landing';
+import Joblist from './components/JobList';
 import EmployerDashboard from './components/EmployerDashboard';
-import './index.css';
 import ApplyJob from './seekercomponents/ApplyJob';
 import Logout from './components/Logout';
 import { useAuth } from './components/AuthContext';
@@ -22,24 +22,22 @@ import JobPostingDetails from './components/JobPostingDetails';
 import JobPostingEdit from './components/JobPostingEditForm';
 import JobPostingList from './components/JobPostingList';
 import ForgotPassword from './logincomponent/ForgotPassword';
-//import JobListings from './jobListingscomponent/JobListings';
+import JobListings from './components/JobListings';
+import Chat from './chat/Chat';
+import UserSearch from './chat/UseSearch';
+import ChatButton from './chat/FloatingChatButton';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import JobListings from './components/JobListings';
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import { Link } from 'react-router-dom';
-
-
 
 const App = () => {
-  const { isAuthenticated } = useAuth(); // Destructure directly from useAuth()
+  const { isAuthenticated } = useAuth();
 
   return (
     <>
       <div>
         <NavBar />
         <Routes>
-          
           <Route path="/" element={<Landing />} />
           <Route path="/joblist" element={<Joblist />} />
           <Route path="/employer-login" element={<EmployerLogin />} />
@@ -59,11 +57,13 @@ const App = () => {
           <Route path="/jobposting/list" element={<JobPostingList />} />
           <Route path="/employer-dashboard" element={<EmployerDashboard />} />
           {isAuthenticated && <Route path="/logout" element={<Logout />} />}
-          <Route path="/apply-job/:jobId" element={<ApplyJob />} />   
+          <Route path="/apply-job/:jobId" element={<ApplyJob />} />
           <Route path="/joblistings" element={<JobListings />} />
-
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/user-search" element={<UserSearch />} />
         </Routes>
         <Footer />
+        {isAuthenticated && <ChatButton />} {/* Show ChatButton only if authenticated */}
         <ToastContainer />
       </div>
     </>
