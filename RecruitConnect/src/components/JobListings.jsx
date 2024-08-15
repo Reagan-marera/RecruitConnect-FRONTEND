@@ -14,13 +14,43 @@ const JobListings = () => {
   const [actionType, setActionType] = useState('');
   const { token, employerId } = useAuth(); // Use AuthContext
 
+  // Mock data
+  const mockJobs = [
+    {
+      id: 1,
+      title: "Software Engineer",
+      description: "Develop and maintain software applications.",
+      location: "San Francisco, CA",
+      created_at: "2024-08-01T10:00:00Z",
+      benefits: "Health, Dental, Vision",
+      responsibilities: "Coding, Debugging, Testing",
+    },
+    {
+      id: 2,
+      title: "Product Manager",
+      description: "Manage product lifecycle and coordinate with teams.",
+      location: "New York, NY",
+      created_at: "2024-08-05T12:00:00Z",
+      benefits: "401(k), Paid Time Off",
+      responsibilities: "Planning, Market Research, Stakeholder Communication",
+    },
+    {
+      id: 3,
+      title: "UX Designer",
+      description: "Design user experiences and interfaces.",
+      location: "Austin, TX",
+      created_at: "2024-08-10T09:00:00Z",
+      benefits: "Flexible Hours, Remote Work Option",
+      responsibilities: "Design, Research, Prototyping",
+    },
+  ];
+
   useEffect(() => {
-    const fetchJobs = async () => {
+    // Mock fetching jobs
+    const fetchJobs = () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:5000/jobs/${employerId}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setJobs(response.data.jobs);
+        // Replace this with API call when using real data
+        setJobs(mockJobs);
       } catch (error) {
         console.error("Failed to fetch jobs", error);
         toast.error("Error fetching jobs. Please try again later.", {
@@ -32,10 +62,8 @@ const JobListings = () => {
       }
     };
 
-    if (employerId && token) {
-      fetchJobs();
-    }
-  }, [employerId, token]);
+    fetchJobs();
+  }, []);
 
   const handleDelete = (job) => {
     setCurrentJob(job);
@@ -52,18 +80,12 @@ const JobListings = () => {
   const confirmAction = async (updatedJob) => {
     try {
       if (actionType === 'delete' && currentJob) {
-        await axios.delete(`http://127.0.0.1:5000/jobs/${currentJob.id}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
         setJobs(jobs.filter(job => job.id !== currentJob.id));
         toast.success("Job deleted successfully.", {
           position: toast.POSITION.BOTTOM_RIGHT,
           autoClose: 3000,
         });
       } else if (actionType === 'update' && currentJob) {
-        await axios.put(`http://127.0.0.1:5000/jobs/${currentJob.id}`, updatedJob, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
         setJobs(jobs.map(job => job.id === currentJob.id ? { ...job, ...updatedJob } : job));
         toast.success("Job updated successfully.", {
           position: toast.POSITION.BOTTOM_RIGHT,

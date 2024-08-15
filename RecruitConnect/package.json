@@ -22,6 +22,7 @@
     "class-variance-authority": "^0.7.0",
     "cloudinary": "^2.4.0",
     "clsx": "^2.1.1",
+    "cors": "^2.8.5",
     "framer-motion": "^11.3.24",
     "lucide-react": "^0.417.0",
     "react": "^18.3.1",

@@ -1,16 +1,17 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 
+// Create AuthContext
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (token) {
-      // Fetch user details on token change
       const fetchUser = async () => {
         try {
           const response = await axios.get("http://127.0.0.1:5000/user", {
@@ -20,10 +21,14 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
           console.error("Error fetching user data", error);
           setUser(null); // Clear user data on error
+        } finally {
+          setLoading(false);
         }
       };
 
       fetchUser();
+    } else {
+      setLoading(false);
     }
   }, [token]);
 
@@ -42,6 +47,7 @@ export const AuthProvider = ({ children }) => {
       setUser(userResponse.data);
     } catch (error) {
       console.error("Login failed", error);
+      setIsAuthenticated(false); // In case of error, update the auth state
     }
   };
 
@@ -53,10 +59,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, token, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, token, user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
+// Custom hook to use the auth context
 export const useAuth = () => useContext(AuthContext);
