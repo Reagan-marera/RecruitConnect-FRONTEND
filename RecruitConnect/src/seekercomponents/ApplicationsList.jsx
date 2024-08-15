@@ -10,7 +10,7 @@ const ApplicationsList = () => {
     useEffect(() => {
         const fetchApplications = async () => {
             try {
-                const token = localStorage.getItem('token'); 
+                const token = localStorage.getItem("token"); 
                 if (!token) {
                     setError('No token found. Please log in.');
                     return;

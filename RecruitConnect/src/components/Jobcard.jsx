@@ -1,46 +1,46 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../jobcard.css';
-import { FaSave, FaArrowRight } from 'react-icons/fa'; // Add this import for icons
-import { toast } from 'react-toastify'; // Import toast
+import { FaSave, FaArrowRight } from 'react-icons/fa'; 
+import axios from 'axios';
 
-const JobCard = ({ job, onClick }) => {
-  const [expanded, setExpanded] = useState(false);
+const JobCard = ({ job, onClick, detailed }) => {
+  const handleSave = async (event) => {
+    event.stopPropagation(); 
 
-  const handleSave = (e) => {
-    e.stopPropagation(); // Prevent triggering the card click event
-    // Add logic to save the job
-    fetch('http://127.0.0.1:5000/savejob', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ jobId: job.id }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Job saved:', data);
-        toast.success('Job saved successfully! 🎉'); // Show success toast with party emoji
-      })
-      .catch(error => {
-        console.error('Error saving job:', error);
-        toast.error('Error saving job. Please try again. 😔'); // Show error toast if saving fails
-      });
+    const token = localStorage.getItem("token"); 
+    if (!token) {
+      console.error('No access token found');
+      alert('Please log in to save jobs.');
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        'http://127.0.0.1:5000/savejob',
+        { job_id: job.id },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        }
+      );
+      console.log('Job saved:', response.data);
+    } catch (error) {
+      console.error('Error saving job:', error.response ? error.response.data : error.message);
+    }
   };
 
-  const handleApply = (e) => {
-    e.stopPropagation(); // Prevent triggering the card click event
+  const handleApply = () => {
     window.location.href = `/apply-job/${job.id}`;
   };
 
   return (
-    <div 
-      className={`job-card ${expanded ? 'expanded' : ''}`} 
-      onClick={() => setExpanded(!expanded)}
-    >
+    <div className={`job-card ${detailed ? 'detailed' : ''}`} onClick={onClick}>
       <h2>{job.title}</h2>
       <p><strong>Company Email:</strong> {job.company_email}</p>
       <p><strong>Location:</strong> {job.location}</p>
-      {expanded && (
+      {detailed && (
         <>
           <p><strong>Description:</strong> {job.description}</p>
           <p><strong>Benefits:</strong> {job.benefits}</p>
