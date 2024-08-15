@@ -4,6 +4,7 @@ import Application from './Application';
 import Profile from './Profile';
 import Savedjobs from './Savedjobs';
 import './seeker.css';
+import ApplicationsList from './ApplicationsList';
 
 function JobSeeker() {
   return (
@@ -24,6 +25,11 @@ function JobSeeker() {
             <Link to="savedjobs" className="jobseeker-nav-button">
               Saved Jobs
             </Link>
+            <li className="jobseeker-nav-item">
+            <Link to="ApplicationsList" className="jobseeker-nav-button">
+            ApplicationsList
+            </Link>
+          </li>            
           </li>
         </ul>
       </nav>
@@ -32,6 +38,7 @@ function JobSeeker() {
           <Route path="application" element={<Application />} />
           <Route path="profile" element={<Profile />} />
           <Route path="savedjobs" element={<Savedjobs />} />
+          <Route path="ApplicationsList" element={<ApplicationsList/>} />
         </Routes>
       </div>
     </div>

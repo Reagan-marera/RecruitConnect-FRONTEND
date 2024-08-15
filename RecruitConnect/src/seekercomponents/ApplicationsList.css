@@ -1,0 +1,62 @@
+/* Basic reset */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Container for the entire application list */
+.applications-list {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling */
+.applications-list h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Style for individual application items */
+.application-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Job ID header */
+.application-item h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+/* Paragraph styling for details */
+.application-item p {
+    margin: 5px 0;
+    color: #666;
+}
+
+/* Link styling for resume and portfolio */
+.application-item a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.application-item a:hover {
+    text-decoration: underline;
+}
+
+/* No data message */
+.applications-list p {
+    font-size: 16px;
+    color: #777;
+}
