@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
-
-import Jobcard from '../components/Jobcard'; 
-// import './SavedJobs.css'; 
+import JobCard from '../components/Jobcard';
+import './SavedJobs.css';
 
 const SavedJobs = () => {
   const [savedJobs, setSavedJobs] = useState([]);
@@ -13,12 +11,13 @@ const SavedJobs = () => {
   useEffect(() => {
     const fetchSavedJobs = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:5000/api/saved_jobs', {
+        const token = localStorage.getItem("token"); 
+        const response = await axios.get('http://127.0.0.1:5000/savedjobs', {
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+            'Authorization': `Bearer ${token}`
           }
         });
-        setSavedJobs(response.data);
+        setSavedJobs(response.data.saved_jobs);
       } catch (error) {
         console.error('Error fetching saved jobs:', error);
         setError('An error occurred while fetching saved jobs. Please try again later.');
@@ -37,7 +36,11 @@ const SavedJobs = () => {
       {error && <p>{error}</p>}
       <div className="job-list">
         {savedJobs.map(job => (
-          <Jobcard key={job.id} job={job} />
+          <JobCard 
+            key={job.id} 
+            job={job} 
+            detailed={true} 
+          />
         ))}
       </div>
     </div>

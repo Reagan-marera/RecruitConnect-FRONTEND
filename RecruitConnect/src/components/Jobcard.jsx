@@ -1,24 +1,34 @@
 import React from 'react';
 import '../jobcard.css';
-import { FaSave, FaArrowRight } from 'react-icons/fa'; // Add this import for icons
+import { FaSave, FaArrowRight } from 'react-icons/fa'; 
+import axios from 'axios';
 
 const JobCard = ({ job, onClick, detailed }) => {
-  const handleSave = () => {
-    // Add logic to save the job, e.g., making a POST request to a certain route
-    fetch('/api/save-job', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ jobId: job.id }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Job saved:', data);
-      })
-      .catch(error => {
-        console.error('Error saving job:', error);
-      });
+  const handleSave = async (event) => {
+    event.stopPropagation(); 
+
+    const token = localStorage.getItem("token"); 
+    if (!token) {
+      console.error('No access token found');
+      alert('Please log in to save jobs.');
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        'http://127.0.0.1:5000/savejob',
+        { job_id: job.id },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        }
+      );
+      console.log('Job saved:', response.data);
+    } catch (error) {
+      console.error('Error saving job:', error.response ? error.response.data : error.message);
+    }
   };
 
   const handleApply = () => {

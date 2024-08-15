@@ -14,7 +14,7 @@ const ApplyJob = () => {
     portfolio: null,
     portfolioLink: '',
   });
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -26,7 +26,7 @@ const ApplyJob = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); 
+    setLoading(true);
 
     const formDataToSend = new FormData();
 
@@ -36,7 +36,7 @@ const ApplyJob = () => {
 
     formDataToSend.append('job_id', jobId);
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token"); 
 
     try {
       const response = await fetch('http://127.0.0.1:5000/applications', {
@@ -52,12 +52,12 @@ const ApplyJob = () => {
       }
 
       alert('Application submitted successfully!');
-      navigate('/ApplicationsList');
+      navigate('/jobseeker/ApplicationsList'); // Navigate to the ApplicationsList page
     } catch (error) {
       console.error('Error submitting application:', error);
       alert('An error occurred while submitting your application. Please try again.');
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -118,7 +118,7 @@ const ApplyJob = () => {
           <textarea
             id="coverLetter"
             name="coverLetter"
-            value={formData.coverLetter}
+            value={formData.coverLetter || ''}
             onChange={handleChange}
             placeholder="Paste your cover letter here or upload below."
           />
