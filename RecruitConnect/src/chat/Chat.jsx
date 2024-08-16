@@ -62,8 +62,8 @@ const Chat = () => {
           <>
             <div className="chat-header">
               {/* Replace with dynamic profile icon */}
-              <img src="/path/to/profile/icon.png" alt="Profile" className="profile-icon" />
-              <h3>Chatting with {selectedUser.username}</h3>
+              <img src="https://www.shutterstock.com/image-vector/man-icon-vector-260nw-1040084344.jpg" alt="Profile" className="profile-icon" />
+              <h3>{selectedUser.username}</h3>
               <span className="unread-count">{unreadCount > 0 && `(${unreadCount})`}</span>
             </div>
             <div className="chat-history">

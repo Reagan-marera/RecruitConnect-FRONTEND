@@ -1,4 +1,4 @@
-// src/App.js
+// src/App.jsx
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
@@ -27,11 +27,20 @@ import Chat from './chat/Chat';
 import UserSearch from './chat/UseSearch';
 import ChatButton from './chat/FloatingChatButton';
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Notyf } from 'notyf'; // Correct named import
+import 'notyf/notyf.min.css'; // Import Notyf CSS
+
+const notyf = new Notyf(); // Create a new instance of Notyf
 
 const App = () => {
   const { isAuthenticated } = useAuth();
+
+  // Override default alert to use Notyf
+  React.useEffect(() => {
+    window.alert = (message) => {
+      notyf.success(message);
+    };
+  }, []);
 
   return (
     <>
@@ -64,7 +73,6 @@ const App = () => {
         </Routes>
         <Footer />
         {isAuthenticated && <ChatButton />} {/* Show ChatButton only if authenticated */}
-        <ToastContainer />
       </div>
     </>
   );
