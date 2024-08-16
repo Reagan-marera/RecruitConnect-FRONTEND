@@ -16,7 +16,7 @@ const ApplicationsList = () => {
                     return;
                 }
 
-                const response = await axios.get('http://localhost:5000/applications/me', {
+                const response = await axios.get('https://recruitconnect-backend-mlpw.onrender.com/applications/me', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

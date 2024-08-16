@@ -17,7 +17,7 @@ const JobPostingForm = () => {
     const refreshAccessToken = async () => {
         try {
             const refreshToken = localStorage.getItem('refreshToken');
-            const response = await axios.post('http://127.0.0.1:5000/refresh', { token: refreshToken });
+            const response = await axios.post('https://recruitconnect-backend-mlpw.onrender.com/refresh', { token: refreshToken });
             localStorage.setItem('token', response.data.accessToken);
             return response.data.accessToken;
         } catch (error) {
@@ -32,7 +32,7 @@ const JobPostingForm = () => {
 
         try {
             const response = await axios.post(
-                'http://127.0.0.1:5000/jobs',
+                'https://recruitconnect-backend-mlpw.onrender.com/jobs',
                 {
                     title: jobTitle,
                     description: description,

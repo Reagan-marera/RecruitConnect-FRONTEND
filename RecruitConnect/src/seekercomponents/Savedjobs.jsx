@@ -12,7 +12,7 @@ const SavedJobs = () => {
     const fetchSavedJobs = async () => {
       try {
         const token = localStorage.getItem("token"); 
-        const response = await axios.get('http://127.0.0.1:5000/savedjobs', {
+        const response = await axios.get('https://recruitconnect-backend-mlpw.onrender.com/savedjobs', {
           headers: {
             'Authorization': `Bearer ${token}`
           }

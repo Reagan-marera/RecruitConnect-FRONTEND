@@ -39,7 +39,7 @@ const ApplyJob = () => {
     const token = localStorage.getItem("token"); 
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/applications', {
+      const response = await fetch('https://recruitconnect-backend-mlpw.onrender.com/applications', {
         method: 'POST',
         body: formDataToSend,
         headers: {

@@ -14,7 +14,7 @@ const Joblist = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/jobs', {
+        const response = await fetch('https://recruitconnect-backend-mlpw.onrender.com/jobs', {
         
         });
 

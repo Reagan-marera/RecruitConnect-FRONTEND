@@ -24,7 +24,7 @@ const ForgotPassword = () => {
     setOtpExpired(false);
 
     try {
-      await axios.post("http://127.0.0.1:5000/request_reset_password", { email });
+      await axios.post("https://recruitconnect-backend-mlpw.onrender.com/request_reset_password", { email });
       setStep(2);
       toast.success("OTP sent successfully. Please check your email.");
     } catch (err) {
@@ -41,7 +41,7 @@ const ForgotPassword = () => {
     setError('');
 
     try {
-      const response = await axios.post("http://127.0.0.1:5000/verify_otp", { email, otp });
+      const response = await axios.post("https://recruitconnect-backend-mlpw.onrender.com/verify_otp", { email, otp });
 
       if (response.data.message === "OTP is valid") {
         setStep(3);
@@ -66,7 +66,7 @@ const ForgotPassword = () => {
     setError('');
 
     try {
-      await axios.post("http://127.0.0.1:5000/request_new_otp", { email });
+      await axios.post("https://recruitconnect-backend-mlpw.onrender.com/request_new_otp", { email });
       setOtpExpired(false);
       setError('New OTP has been sent to your email.');
       toast.success('New OTP has been sent to your email.');
@@ -91,14 +91,14 @@ const ForgotPassword = () => {
     }
 
     try {
-      const response = await axios.post("http://127.0.0.1:5000/reset_password", {
+      const response = await axios.post("https://recruitconnect-backend-mlpw.onrender.com/reset_password", {
         email,
         otp,
         new_password: newPassword
       });
 
       if (response.data.message === 'Password reset successfully') {
-        const roleResponse = await axios.post("http://127.0.0.1:5000/get_user_role_by_email", { email });
+        const roleResponse = await axios.post("https://recruitconnect-backend-mlpw.onrender.com/get_user_role_by_email", { email });
         const userRole = roleResponse.data.role;
 
         if (userRole === 'employer') {

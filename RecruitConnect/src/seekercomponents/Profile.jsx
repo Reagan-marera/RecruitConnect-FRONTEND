@@ -67,7 +67,7 @@ const Profile = () => {
     formData.append('profile_picture', user.profile_picture); 
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/profile', {
+      const response = await fetch('https://recruitconnect-backend-mlpw.onrender.com/profile', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,

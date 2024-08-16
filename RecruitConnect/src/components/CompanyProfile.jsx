@@ -24,7 +24,7 @@ const CompanyProfile = ({ employer_id, token, onProfileUpdate }) => {
 
         console.log(`Fetching company profile for employer_id: ${employer_id}`);
         const response = await axios.get(
-          `http://127.0.0.1:5000/company_profile/${employer_id}`,
+          `https://recruitconnect-backend-mlpw.onrender.com/company_profile/${employer_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -63,7 +63,7 @@ const CompanyProfile = ({ employer_id, token, onProfileUpdate }) => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://127.0.0.1:5000/company_profile/${employer_id}`,
+        `https://recruitconnect-backend-mlpw.onrender.com/company_profile/${employer_id}`,
         updatedProfile,
         {
           headers: {

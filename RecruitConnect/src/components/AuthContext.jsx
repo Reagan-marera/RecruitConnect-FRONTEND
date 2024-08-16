@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       const fetchUser = async () => {
         try {
-          const response = await axios.get("http://127.0.0.1:5000/user", {
+          const response = await axios.get("https://recruitconnect-backend-mlpw.onrender.com/user", {
             headers: { Authorization: `Bearer ${token}` }
           });
           setUser(response.data);

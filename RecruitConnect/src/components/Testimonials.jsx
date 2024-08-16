@@ -18,7 +18,7 @@ const Testimonials = () => {
     const fetchTestimonials = async () => {
       try {
         const token = getAuthToken();
-        const response = await fetch("http://127.0.0.1:5000/feedback", {
+        const response = await fetch("https://recruitconnect-backend-mlpw.onrender.com/feedback", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -56,7 +56,7 @@ const Testimonials = () => {
   
     try {
       const token = getAuthToken();
-      const response = await fetch("http://127.0.0.1:5000/feedback", {
+      const response = await fetch("https://recruitconnect-backend-mlpw.onrender.com/feedback", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

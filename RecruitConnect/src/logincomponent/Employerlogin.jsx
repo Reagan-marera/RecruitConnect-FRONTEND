@@ -32,7 +32,7 @@ const EmployerLogin = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:5000/login",
+        "https://recruitconnect-backend-mlpw.onrender.com/login",
         formData
       );
       localStorage.setItem("token", response.data.access_token);
